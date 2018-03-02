@@ -1,0 +1,79 @@
+
+@media (max-height:1080px){
+  .app-content-homepage-main,.app-content-homepage-main-bubbleAnim{
+    height: 930px;
+  }
+}
+@media (max-height:900px){
+  .app-content-homepage-main,.app-content-homepage-main-bubbleAnim{
+    height: 760px;
+  }
+}
+.app-content-homepage-main{
+  background-image: url('/bg1.jpg');
+  background-size: 100% 100%;
+}
+.app-content-homepage-main-bubbleAnim{
+  position: relative;
+}
+.app-content-homepage-main-bubble{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  border-radius: 50%;
+  background-image: url('/paopao.png');
+  background-size: 100% 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+.app-content-homepage-main-bubble-mask{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+}
+.app-content-homepage-main-bubble:hover .app-content-homepage-main-bubble-mask{
+  opacity: 1;
+}
+.app-content-homepage-main-bubble-url{
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  line-height: 200px;
+  transition: all 0.5s;
+}
+.app-content-homepage-main-bubble:hover .app-content-homepage-main-bubble-url{
+  top: 0;
+}
+.app-content-homepage-main-bubble-icon{
+  font-size: 50px;
+  vertical-align: middle;
+  color: #b19191;
+}
+.app-content-homepage-main-bubble-course{
+  top: 39%;
+  left: 15%;
+}
+.app-content-homepage-main-bubble-trip{
+  top: 19%;
+  left: 37%;
+}
+.app-content-homepage-main-bubble-practice{
+  top: 50%;
+  left: 50%;
+}
+.app-content-homepage-main-bubble-equipment{
+  top: 45%;
+  left: 70%;
+}

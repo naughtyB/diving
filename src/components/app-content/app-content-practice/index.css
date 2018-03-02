@@ -1,0 +1,34 @@
+.app-content-practice{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 40px 50px;
+}
+
+.app-content-practice-left , .app-content-practice-right{
+  width: 45%;
+}
+
+.app-content-practice-card{
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+
+.app-content-practice-card .ant-card-body{
+  padding: 24px 24px 0;
+}
+
+.app-content-practice-card .ant-card-cover img{
+  width: '100%';
+  height: 300px;
+}
+
+.app-content-practice-card-meta{
+  overflow: hidden;
+  transition: all 1000ms;
+}
+
+.app-content-practice-card-meta .ant-card-meta-description{
+  margin-bottom: 25px;
+}
