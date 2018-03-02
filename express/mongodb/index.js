@@ -31,9 +31,17 @@ let PracticeSchema = new Schema({
   detail: [{title: String, content: String}]
 })
 
-let Practice = mongoose.model("practice", PracticeSchema)
+let Practice = mongoose.model("practice", PracticeSchema);
+
+let UserSchema = new Schema({
+  mobileNumber: String,
+  password: String
+})
+
+let User = mongoose.model("user", UserSchema);
 
 module.exports={
   Homepage,
-  Practice
+  Practice,
+  User
 };

@@ -1,0 +1,23 @@
+.app-header-user{
+  width: 420px !important;
+}
+
+.app-header-user .ant-tabs-bar{
+  margin-bottom: 24px;
+}
+
+.app-header-user .ant-modal-body{
+  padding: 8px 0px 24px;
+}
+
+.app-header-user .ant-tabs-nav-scroll{
+  padding: 0 0 0 24px;
+}
+
+.app-header-user .ant-form-item{
+  margin-bottom: 20px;
+}
+
+.app-header-user-frame{
+  padding: 0 24px 0 24px;
+}

@@ -4,6 +4,7 @@ import AppContentHomepage from './app-content-homepage/index.js';
 import AppContentCourse from './app-content-course/index.js';
 import AppContentPractice from './app-content-practice/index.js';
 import AppContentPracticeAppointment from './app-content-practice-appointment/index.js';
+import AppContentUser from './app-content-user/index.js';
 
 export class AppContent extends React.Component{
   constructor(props){
@@ -16,6 +17,7 @@ export class AppContent extends React.Component{
           key="homepage"
           exact path='/'
           render={({history,location})=>{
+            console.log(1234);
             return <AppContentHomepage
               history={history}
               location={location}
@@ -52,6 +54,16 @@ export class AppContent extends React.Component{
             />
           }}
         />
+        <Route 
+          exact path="/user"
+          key="user"
+          render={({history,location})=>{
+            return <AppContentUser
+              history={history}
+              location={location}
+            />
+          }}
+        />
         <Redirect to={{
           pathname: '/'
         }}/>
@@ -59,5 +71,8 @@ export class AppContent extends React.Component{
     )
   }
 }
+
+
+
 
 export default AppContent;

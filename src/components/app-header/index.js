@@ -4,7 +4,14 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import AppHeaderUser from './app-header-user/index.js';
-import { doChangeUserModalVisible } from '../../redux/action/userModal.js';
+import { doChangeUserModalVisible, doChangeLoginState } from '../../redux/action/user.js';
+import fetch from "isomorphic-fetch";
+import Promise from "promise-polyfill";
+import Cookies from 'js-cookie';
+//兼容性处理
+if(!window.Promise){
+    window.Promise=Promise
+}
 
 class AppHeader extends React.Component{
   constructor(props){
@@ -13,6 +20,40 @@ class AppHeader extends React.Component{
       selectedKeys: ['homepage']
     }
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+  }
+  componentWillMount(){
+    let userId = Cookies.get('userId');
+    let mobileNumber = Cookies.get('mobileNumber');
+    fetch('/server/user/autoLogin',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'mobileNumber=' + encodeURIComponent(mobileNumber) + '&userId=' + encodeURIComponent(userId)
+    }).then(res => {
+      return res.json();
+    }).then(res => {
+      if(res.isCorrect){
+        this.props.onChangeLoginState(true);
+      }
+    })
+  }
+  componentWillUpdate(){
+    let userId = Cookies.get('userId');
+    let mobileNumber = Cookies.get('mobileNumber');
+    fetch('/server/user/autoLogin',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'mobileNumber=' + encodeURIComponent(mobileNumber) + '&userId=' + encodeURIComponent(userId)
+    }).then(res => {
+      return res.json();
+    }).then(res => {
+      if(res.isCorrect){
+        this.props.onChangeLoginState(true);
+      }
+    })
   }
   componentDidUpdate(preProps){
     const pathname = this.props.location.pathname;
@@ -97,9 +138,15 @@ class AppHeader extends React.Component{
             <Menu.Item key="news" style={{height: '80px', lineHeight: '80px'}}>
               潜水资讯
             </Menu.Item>
-            <Menu.Item key="login" style={{height: '80px', lineHeight: '80px'}}>
-              登录
-            </Menu.Item>
+            {
+              this.props.loginState ? 
+              (<Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>
+                个人中心
+              </Menu.Item>) :
+              (<Menu.Item key="login" style={{height: '80px', lineHeight: '80px'}}>
+                登录
+              </Menu.Item>)
+            }
           </Menu>
           <AppHeaderUser/>
         </div>
@@ -107,16 +154,18 @@ class AppHeader extends React.Component{
     )
   }
 }
-
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible))
+    loginState: state.user.loginState
   }
 }
 
-// export default withRouter(({history, location, match})=>{ 
-//   return <AppHeader history={history} location={location}/>
-// })
-export default withRouter(connect(() => {},mapDispatchToProps)(AppHeader))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible)),
+    onChangeLoginState: (loginState) => dispatch(doChangeLoginState(loginState))
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AppHeader))
 

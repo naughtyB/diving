@@ -1,8 +1,8 @@
-import { Card, Icon, Avatar, Spin, message } from 'antd';
+import { Card, Icon, Spin, message } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import Description from './description.js';
-import { doGetPracticeData, doChangePracticeDisplay, doChangePracticeDisplayIndex } from '../../../redux/action/practice.js';
+import { doGetPracticeData, doChangePracticeDisplayIndex } from '../../../redux/action/practice.js';
 import './index.css';
 const { Meta } = Card;
 
