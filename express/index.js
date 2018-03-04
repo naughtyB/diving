@@ -25,4 +25,7 @@ app.use('/server/user/login', urlencodeParser, require('./router/login'));
 //自动检测登录
 app.use('/server/user/autoLogin', urlencodeParser, require('./router/autoLogin'));
 
+//注册
+app.use('/server/user/register', urlencodeParser, require('./router/register'));
+
 http.createServer(app).listen(8000);

@@ -1,0 +1,14 @@
+.app-header-user-register-submit-input{
+  width: 100%;
+}
+
+.app-header-user-register .ant-form-item-control{
+  height: 40px;
+}
+
+.app-header-user-register-captcha{
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+}

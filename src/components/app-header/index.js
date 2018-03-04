@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Tooltip } from 'antd';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
@@ -141,7 +141,9 @@ class AppHeader extends React.Component{
             {
               this.props.loginState ? 
               (<Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>
-                个人中心
+                <Tooltip trigger="hover" title="asd">
+                  个人中心
+                </Tooltip>
               </Menu.Item>) :
               (<Menu.Item key="login" style={{height: '80px', lineHeight: '80px'}}>
                 登录

@@ -35,7 +35,8 @@ let Practice = mongoose.model("practice", PracticeSchema);
 
 let UserSchema = new Schema({
   mobileNumber: String,
-  password: String
+  password: String,
+  username: String
 })
 
 let User = mongoose.model("user", UserSchema);

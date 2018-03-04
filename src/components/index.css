@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 490574 */
-  src: url('//at.alicdn.com/t/font_490574_fft2i0oa6p0t3xr.eot');
-  src: url('//at.alicdn.com/t/font_490574_fft2i0oa6p0t3xr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_490574_fft2i0oa6p0t3xr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_490574_fft2i0oa6p0t3xr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_490574_fft2i0oa6p0t3xr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_490574_jqhpsyf6jchm2t9.eot');
+  src: url('//at.alicdn.com/t/font_490574_jqhpsyf6jchm2t9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_490574_jqhpsyf6jchm2t9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_490574_jqhpsyf6jchm2t9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_490574_jqhpsyf6jchm2t9.svg#iconfont') format('svg');
 }
 
 /* 没用 */
@@ -41,6 +41,11 @@
 .anticon-appointment:before{
   font-family:iconfont !important;
   content:"\e6e2"
+}
+
+.anticon-captcha:before{
+  font-family:iconfont !important;
+  content:"\e609"
 }
 
 .ant-layout{

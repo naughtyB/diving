@@ -31,7 +31,7 @@ class AppHeaderUserLogin extends React.Component{
               { len:11,message:"请输入11位数字的手机号"}
             ]
             })(
-              <Input prefix={<Icon  type="mobile" style={{ fontSize: 13}} />} placeholder="手机号" />
+              <Input prefix={<Icon  type="mobile" style={{ fontSize: 13}} />} type="text" placeholder="手机号" />
           )}
         </FormItem>
         <FormItem hasFeedback>

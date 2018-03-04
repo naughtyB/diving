@@ -1,7 +1,7 @@
 let User = require("../mongodb/index")["User"];
 
-module.exports=(req, res) => {
-  let userMessage={mobileNumber: decodeURIComponent(req.body.mobileNumber), password: decodeURIComponent(req.body.password)};
+module.exports = (req, res) => {
+  let userMessage = {mobileNumber: decodeURIComponent(req.body.mobileNumber), password: decodeURIComponent(req.body.password)};
   User.find(userMessage, (err,findUserResponse) => {
     if(err){
       res.json({isCorrect: false, error: "发生错误!请重新提交", errorType: "password"})
