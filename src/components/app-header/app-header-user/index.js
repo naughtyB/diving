@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { doChangeUserModalVisible } from '../../../redux/action/user.js';
 import AppHeaderUserLogin from './app-header-user-login/index.js';
 import AppHeaderUserRegister from './app-header-user-register/index.js';
+import AppHeaderUserResetPassword from './app-header-user-resetPassword/index.js';
 import './index.css'
 const TabPane = Tabs.TabPane;
 
@@ -31,7 +32,11 @@ export class AppHeaderUser extends React.Component{
               <AppHeaderUserRegister/>
             </div>
           </TabPane>
-          <TabPane tab="修改密码" key="3">Content of Tab Pane 3</TabPane>
+          <TabPane tab="修改密码" key="3">
+            <div className="app-header-user-frame">
+              <AppHeaderUserResetPassword/>
+            </div>
+          </TabPane>
         </Tabs>
       </Modal>
     )

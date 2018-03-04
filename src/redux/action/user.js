@@ -12,21 +12,35 @@ export const CHANGE_USER_MODAL_VISIBLE = 'CHANGE_USER_MODAL_VISIBLE';
 //改变用户登录资料
 export const CHANGE_USER_LOGIN_FIELDS = 'CHANGE_USER_LOGIN_FIELDS';
 
+//用户提交登录申请
 export const SUBMIT_LOGIN_REQUEST_POST = 'SUBMIT_LOGIN_REQUEST_POST';
 
 export const SUBMIT_LOGIN_RECEIVE_SUCCESS_POST = 'SUBMIT_LOGIN_RECEIVE_SUCCESS_POST';
 
 export const SUBMIT_LOGIN_RECEIVE_ERROR_POST = 'SUBMIT_LOGIN_RECEIVE_ERROR_POST';
 
+//改变用户登录状态
 export const CHANGE_LOGINSTATE = 'CHANGE_LOGINSTATE';
 
+//改变用户注册资料
 export const CHANGE_USER_REGISTER_FIELDS = 'CHANGE_USER_REGISTER_FIELDS';
 
+//用户提交注册申请
 export const SUBMIT_REGISTER_REQUEST_POST = 'SUBMIT_REGISTER_REQUEST_POST';
 
 export const SUBMIT_REGISTER_RECEIVE_SUCCESS_POST = 'SUBMIT_REGISTER_RECEIVE_SUCCESS_POST';
 
 export const SUBMIT_REGISTER_RECEIVE_ERROR_POST = 'SUBMIT_REGISTER_RECEIVE_ERROR_POST';
+
+//改变用户找回密码资料
+export const CHANGE_USER_RESET_PASSWORD_FIELDS = 'CHANGE_USER_RESET_PASSWORD_FIELDS';
+
+//用户提交修改密码申请
+export const SUBMIT_RESET_PASSWORD_REQUEST_POST = 'SUBMIT_RESET_PASSWORD_REQUEST_POST';
+
+export const SUBMIT_RESET_PASSWORD_RECEIVE_SUCCESS_POST = 'SUBMIT_RESET_PASSWORD_RECEIVE_SUCCESS_POST';
+
+export const SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST = 'SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST';
 
 export const doChangeUserModalVisible = (modalVisible) => {
   return {
@@ -136,6 +150,54 @@ export const doSubmitRegister = (mobileNumber, password, username, captcha) => (
     }
     else{
       dispatch(doSubmitRegisterReceiveErrorPost(res.errorType, res.error))
+    }
+  })
+}
+
+export const doChangeUserResetPasswordFields = (resetPasswordFieldsChanged) => {
+  return {
+    type: CHANGE_USER_RESET_PASSWORD_FIELDS,
+    resetPasswordFieldsChanged
+  }
+}
+
+export const doSubmitResetPasswordRequestPost = () => {
+  return {
+    type: SUBMIT_RESET_PASSWORD_REQUEST_POST
+  }
+}
+
+export const doSubmitResetPasswordReceiveSuccessPost = () => {
+  return {
+    type: SUBMIT_RESET_PASSWORD_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doSubmitResetPasswordReceiveErrorPost = (errorType, error) => {
+  return {
+    type: SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST,
+    errorType,
+    error
+  }
+}
+
+export const doSubmitResetPassword = (mobileNumber, password, captcha) => (dispatch) =>{
+  dispatch(doSubmitResetPasswordRequestPost());
+  fetch('/server/user/resetPassword',{
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'mobileNumber=' + encodeURIComponent(mobileNumber) + '&password=' + encodeURIComponent(password) + '&captcha=' + encodeURIComponent(captcha)
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doSubmitResetPasswordReceiveSuccessPost());
+      console.log(res);
+    }
+    else{
+      dispatch(doSubmitResetPasswordReceiveErrorPost(res.errorType, res.error));
     }
   })
 }

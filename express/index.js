@@ -28,4 +28,7 @@ app.use('/server/user/autoLogin', urlencodeParser, require('./router/autoLogin')
 //注册
 app.use('/server/user/register', urlencodeParser, require('./router/register'));
 
+//找回密码
+app.use('/server/user/resetPassword', urlencodeParser, require('./router/resetPassword'))
+
 http.createServer(app).listen(8000);

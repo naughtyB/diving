@@ -10,6 +10,15 @@ export class AppHeaderUserRegister extends React.Component{
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
+    this.checkConfirm = this.checkConfirm.bind(this);
+  }
+  checkConfirm(rule, value, callback){
+    const form = this.props.form;
+    const repeatPassword = form.getFieldValue('confirm');
+    if(repeatPassword){
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
   }
   checkPassword(rule, value, callback){
     const form = this.props.form;
@@ -48,7 +57,8 @@ export class AppHeaderUserRegister extends React.Component{
             validateFirst:true,
           rules: [
             { required: true, message: '请输入密码' },
-            { pattern:/[a-zA-Z0-9\-_]{4,30}/,message:"密码为4-30个字符,且不包含除_和-以外的字符"}
+            { pattern:/[a-zA-Z0-9\-_]{4,30}/,message:"密码为4-30个字符,且不包含除_和-以外的字符"},
+            { validator: this.checkConfirm }
           ]
           })(
             <Input prefix={<Icon type="lock" style={{ fontSize: 13}} />} type="password" placeholder="密码" />
@@ -103,7 +113,7 @@ export class AppHeaderUserRegister extends React.Component{
           loading={this.props.isRegistering}
           onClick={this.handleSubmit}
         >
-          登录
+          注册
         </Button>
       </Form>               
     )
