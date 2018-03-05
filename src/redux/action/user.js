@@ -42,6 +42,23 @@ export const SUBMIT_RESET_PASSWORD_RECEIVE_SUCCESS_POST = 'SUBMIT_RESET_PASSWORD
 
 export const SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST = 'SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST';
 
+//改变用户资料
+export const CHANGE_USER_DATA_FIELDS = 'CHANGE_USER_DATA_FIELDS';
+
+//用户提交修改用户资料申请
+export const SUBMIT_USER_DATA_REQUEST_POST = 'SUBMIT_USER_DATA_REQUEST_POST';
+
+export const SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST = 'SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST';
+
+export const SUBMIT_USER_DATA_RECEIVE_ERROR_POST = 'SUBMIT_USER_DATA_RECEIVE_ERROR_POST';
+
+//获取用户数据
+export const GET_USER_DATA_FIELDS_REQUEST_POST = 'GET_USER_DATA_FIELDS_REQUEST_POST';
+
+export const GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST = 'GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST';
+
+export const GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST = 'GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST';
+
 export const doChangeUserModalVisible = (modalVisible) => {
   return {
     type: CHANGE_USER_MODAL_VISIBLE,
@@ -92,6 +109,7 @@ export const doSubmitLogin = (mobileNumber, password) => (dispatch) => {
     }
     else{
       dispatch(doSubmitLoginReceiveSuccessPost());
+      dispatch(doChangeLoginState(true));
       Cookies.set('mobileNumber', res.userData['mobileNumber']);
       Cookies.set('userId',res.userData['_id']);
     }
@@ -144,7 +162,8 @@ export const doSubmitRegister = (mobileNumber, password, username, captcha) => (
     return res.json();
   }).then(res => {
     if(res.isSuccessful){
-      dispatch(doSubmitRegisterReceiveSuccessPost())
+      dispatch(doSubmitRegisterReceiveSuccessPost());
+      dispatch(doChangeLoginState(true));
       Cookies.set('mobileNumber', res.userData['mobileNumber']);
       Cookies.set('userId',res.userData['_id']);
     }
@@ -194,10 +213,62 @@ export const doSubmitResetPassword = (mobileNumber, password, captcha) => (dispa
   }).then(res => {
     if(res.isSuccessful){
       dispatch(doSubmitResetPasswordReceiveSuccessPost());
-      console.log(res);
+      dispatch(doChangeLoginState(true));
+      Cookies.set('mobileNumber', res.userData['mobileNumber']);
+      Cookies.set('userId',res.userData['_id']);
     }
     else{
       dispatch(doSubmitResetPasswordReceiveErrorPost(res.errorType, res.error));
     }
   })
+}
+
+export const doChangeUserDataFields = (userDataFieldsChanged) => {
+  return {
+    type: CHANGE_USER_DATA_FIELDS,
+    userDataFieldsChanged
+  }
+}
+
+export const doSubmitUserDataRequestPost = () => {
+  return {
+    type: SUBMIT_USER_DATA_REQUEST_POST
+  }
+}
+
+export const doSubmitUserDataReceiveSuccessPost = () => {
+  return {
+    type: SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doSubmitUserDataReceiveErrorPost = (errorType, error) => {
+  return {
+    type: SUBMIT_USER_DATA_RECEIVE_ERROR_POST,
+    errorType,
+    error
+  }
+}
+
+export const doGetUserDataFieldsRequestPost = () => {
+  return {
+    type: GET_USER_DATA_FIELDS_REQUEST_POST
+  }
+}
+
+export const doGetUserDataFieldsReceiveSuccessPost = () => {
+  return {
+    type: GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doGetUserDataFieldsReceiveErrorPost = () =>{
+  return {
+    type: GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST
+  }
+}
+
+export const doGetUserData = () => (dispatch) => {
+  dispatch(doGetUserDataFieldsRequestPost());
+  fetch('/server/user/userDataField')
 }

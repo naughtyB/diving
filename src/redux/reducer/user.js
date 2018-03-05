@@ -12,7 +12,12 @@ import {
   CHANGE_USER_RESET_PASSWORD_FIELDS,
   SUBMIT_RESET_PASSWORD_REQUEST_POST,
   SUBMIT_RESET_PASSWORD_RECEIVE_SUCCESS_POST,
-  SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST
+  SUBMIT_RESET_PASSWORD_RECEIVE_ERROR_POST,
+  CHANGE_USER_DATA_FIELDS,
+  SUBMIT_USER_DATA_REQUEST_POST,
+  SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST,
+  SUBMIT_USER_DATA_RECEIVE_ERROR_POST,
+  GET_USER_DATA
 } from '../action/user.js';
 
 const initialUser = {
@@ -55,10 +60,20 @@ const initialUser = {
       value: ''
     }
   },
+  userDataFields:{
+    username: {
+      value: '你牛逼'
+    },
+    sex: {
+      value: 'secret'
+    }
+  },
+  userData: {},
   modalVisible: false,
   isLogging: false,
   isRegistering: false,
   isResettingPassword: false,
+  isSubmittingUserData: false,
   loginState: false
 }
 
@@ -121,7 +136,25 @@ export const user = (state = initialUser, action) => {
           ...state.resetPasswordFields,
           [action.errorType]: {
             ...state.resetPasswordFields[action.errorType],
-            errors:[{field: action.errorType, message: action.error}]
+            errors: [{field: action.errorType, message: action.error}]
+          }
+        }
+      }
+    case CHANGE_USER_DATA_FIELDS:
+      return {...state, userDataFields: {...state.userDataFields, ...action.userDataFieldsChanged}};
+    case SUBMIT_USER_DATA_REQUEST_POST:
+      return {...state, isSubmittingUserData: true};
+    case SUBMIT_REGISTER_RECEIVE_SUCCESS_POST:
+      return {...state, isSubmittingUserData: false};
+    case SUBMIT_USER_DATA_RECEIVE_ERROR_POST:
+      return {
+        ...state, 
+        isSubmittingUserData: false,
+        userDataFields: {
+          ...state.userDataFields,
+          [action.errorType]: {
+            ...state.userDataFields[action.errorType],
+            errors: [{field: action.errorType, message: action.error}]
           }
         }
       }

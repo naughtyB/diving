@@ -55,7 +55,7 @@ export class AppContent extends React.Component{
           }}
         />
         <Route 
-          exact path="/user"
+          path="/user"
           key="user"
           render={({history,location})=>{
             return <AppContentUser

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Tooltip } from 'antd';
+import { Menu } from 'antd';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
@@ -7,11 +7,13 @@ import AppHeaderUser from './app-header-user/index.js';
 import { doChangeUserModalVisible, doChangeLoginState } from '../../redux/action/user.js';
 import fetch from "isomorphic-fetch";
 import Promise from "promise-polyfill";
-import Cookies from 'js-cookie';
+
 //兼容性处理
 if(!window.Promise){
     window.Promise=Promise
 }
+
+let pathnames= ['/user/userData']
 
 class AppHeader extends React.Component{
   constructor(props){
@@ -21,40 +23,6 @@ class AppHeader extends React.Component{
     }
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
   }
-  componentWillMount(){
-    let userId = Cookies.get('userId');
-    let mobileNumber = Cookies.get('mobileNumber');
-    fetch('/server/user/autoLogin',{
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: 'mobileNumber=' + encodeURIComponent(mobileNumber) + '&userId=' + encodeURIComponent(userId)
-    }).then(res => {
-      return res.json();
-    }).then(res => {
-      if(res.isCorrect){
-        this.props.onChangeLoginState(true);
-      }
-    })
-  }
-  componentWillUpdate(){
-    let userId = Cookies.get('userId');
-    let mobileNumber = Cookies.get('mobileNumber');
-    fetch('/server/user/autoLogin',{
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: 'mobileNumber=' + encodeURIComponent(mobileNumber) + '&userId=' + encodeURIComponent(userId)
-    }).then(res => {
-      return res.json();
-    }).then(res => {
-      if(res.isCorrect){
-        this.props.onChangeLoginState(true);
-      }
-    })
-  }
   componentDidUpdate(preProps){
     const pathname = this.props.location.pathname;
     if(pathname !== preProps.location.pathname){
@@ -62,6 +30,11 @@ class AppHeader extends React.Component{
         if(pathname === '/'){
           return {
             selectedKeys: ['homepage']
+          }
+        }
+        else if(pathnames.includes(pathnames)){
+          return {
+            selectedKeys: ['user']
           }
         }
         return {
@@ -78,6 +51,11 @@ class AppHeader extends React.Component{
           selectedKeys: ['homepage']
         }
       }
+      else if(pathnames.includes(pathnames)){
+        return {
+          selectedKeys: ['user']
+        }
+      }
       return {
         selectedKeys: [pathname.match(/(\/)([a-z0-9A-Z]+)(\/)?/)[2]]
       }
@@ -91,9 +69,17 @@ class AppHeader extends React.Component{
             selectedKeys: [key]
           }
         })
-        this.props.history.push({
-          pathname: '/' + (key === 'homepage' ? '' : key)
-        })
+        switch(key){
+          case 'homepage':
+            this.props.history.push({pathname: '/'});
+            break;
+          case 'user':
+            this.props.history.push({pathname: '/user/userData'});
+            break;
+          default:
+            this.props.history.push({pathname: '/' + key});
+            break;
+        }
       }
     }
     else{
@@ -140,14 +126,16 @@ class AppHeader extends React.Component{
             </Menu.Item>
             {
               this.props.loginState ? 
-              (<Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>
-                <Tooltip trigger="hover" title="asd">
+              (
+                <Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>               
                   个人中心
-                </Tooltip>
-              </Menu.Item>) :
-              (<Menu.Item key="login" style={{height: '80px', lineHeight: '80px'}}>
-                登录
-              </Menu.Item>)
+                </Menu.Item>
+              ) :
+              (
+                <Menu.Item key="login" style={{height: '80px', lineHeight: '80px'}}>
+                  登录
+                </Menu.Item>
+              )
             }
           </Menu>
           <AppHeaderUser/>
@@ -164,8 +152,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible)),
-    onChangeLoginState: (loginState) => dispatch(doChangeLoginState(loginState))
+    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible))
   }
 }
 
