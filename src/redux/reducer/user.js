@@ -17,7 +17,10 @@ import {
   SUBMIT_USER_DATA_REQUEST_POST,
   SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST,
   SUBMIT_USER_DATA_RECEIVE_ERROR_POST,
-  GET_USER_DATA
+  GET_USER_DATA_FIELDS_REQUEST_POST,
+  GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST,
+  GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST,
+  GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -73,6 +76,8 @@ const initialUser = {
   isLogging: false,
   isRegistering: false,
   isResettingPassword: false,
+  isGettingUserDataFields: false,
+  isGettingUserDataFieldsSuccessful: false,
   isSubmittingUserData: false,
   loginState: false
 }
@@ -158,6 +163,26 @@ export const user = (state = initialUser, action) => {
           }
         }
       }
+    case GET_USER_DATA_FIELDS_REQUEST_POST:
+      return {...state, isGettingUserDataFields: true, isGettingUserDataFieldsSuccessful: false};
+    case GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST:
+      return {
+        ...state, 
+        isGettingUserDataFields: false, 
+        isGettingUserDataFieldsSuccessful: true,
+        userDataFields: {
+          username: {
+            value: action.userDataFields.username
+          },
+          sex: {
+            value: action.userDataFields.sex || 'secret'
+          }
+        }
+      };
+    case GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isGettingUserDataFields: false, isGettingUserDataFieldsSuccessful: false};
+    case GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isGettingUserDataFields: false, loginState: false, isGettingUserDataFieldsSuccessful: false};
     default:
       return state;
   }

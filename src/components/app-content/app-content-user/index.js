@@ -3,12 +3,33 @@ import { Menu, Spin, message } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
 import AppContentUserData from './app-content-user-data/index.js';
+import AppContentUserOrder from './app-content-user-order/index.js';
 import { doChangeLoginState } from '../../../redux/action/user';
 import './index.css'
 
 let timer = null;
-let pathnames = ['/user/userData']
+let pathnames = ['/user/userData', '/user/userOrder'];
+
 export class AppContentUser extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedKeys: ['userData']
+    };
+    this.handleMenuSelect = this.handleMenuSelect.bind(this);
+  }
+  handleMenuSelect({item, key, selectedKeys}){
+    if(selectedKeys[0] === key){
+      this.setState(() => {
+        return {
+          selectedKeys: [key]
+        }
+      });
+      this.props.history.push({
+        pathname: '/user/' + key 
+      })
+    }
+  }
   componentWillMount(){
     if(pathnames.includes(this.props.location.pathname)){
       if(!this.props.loginState){
@@ -35,8 +56,20 @@ export class AppContentUser extends React.Component{
         message.info('请先进行登录');
       }
       else{
+        this.setState(() => {
+          return {
+            selectedKeys: [this.props.location.pathname.replace(/\/user\/([\S\s]+)/, '$1')]
+          }
+        })
         clearTimeout(timer);
       }
+    }
+    if(nextProps.loginState && this.props.location.pathname !== nextProps.location.pathname && pathnames.includes(nextProps.location.pathname)){
+      this.setState(() => {
+        return {
+          selectedKeys: [nextProps.location.pathname.replace(/\/user\/([\S\s]+)/, '$1')]
+        }
+      })
     }
   }
   componentWillUnmount(){
@@ -49,8 +82,9 @@ export class AppContentUser extends React.Component{
           <div className="app-content-user-menu">
             <Menu
               style={{ width: 256 }}
-              defaultSelectedKeys={['userData']}
+              selectedKeys={this.state.selectedKeys}
               mode="inline"
+              onSelect={this.handleMenuSelect}
             >
               <Menu.Item key="userData" className="app-content-user-menu-each">
                 个人信息
@@ -65,6 +99,15 @@ export class AppContentUser extends React.Component{
               exact path="/user/userData"
               render={({history,location})=>{
                 return <AppContentUserData
+                  history={history}
+                  location={location}
+                />
+              }}
+            />
+            <Route
+              exact path="/user/userOrder"
+              render={({history,location})=>{
+                return <AppContentUserOrder
                   history={history}
                   location={location}
                 />

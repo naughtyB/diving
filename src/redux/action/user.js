@@ -6,6 +6,8 @@ if(!window.Promise){
     window.Promise=Promise
 }
 
+
+
 //改变登录框的显示
 export const CHANGE_USER_MODAL_VISIBLE = 'CHANGE_USER_MODAL_VISIBLE';
 
@@ -57,7 +59,11 @@ export const GET_USER_DATA_FIELDS_REQUEST_POST = 'GET_USER_DATA_FIELDS_REQUEST_P
 
 export const GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST = 'GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST';
 
-export const GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST = 'GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST';
+export const GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST';
+
+export const GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST = 'GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST';
+
+
 
 export const doChangeUserModalVisible = (modalVisible) => {
   return {
@@ -256,19 +262,45 @@ export const doGetUserDataFieldsRequestPost = () => {
   }
 }
 
-export const doGetUserDataFieldsReceiveSuccessPost = () => {
+export const doGetUserDataFieldsReceiveSuccessPost = (userDataFields) => {
   return {
-    type: GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST
+    type: GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST,
+    userDataFields
   }
 }
 
-export const doGetUserDataFieldsReceiveErrorPost = () =>{
+export const doGetUserDataFieldsReceiveOtherErrorPost = () =>{
   return {
-    type: GET_USER_DATA_FIELDS_RECEIVE_ERROR_POST
+    type: GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST
   }
 }
 
-export const doGetUserData = () => (dispatch) => {
+export const doGetUserDataFieldsReceiveLoginErrorPost = () => {
+  return {
+    type:GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doGetUserDataFields = (errCallback) => (dispatch) => {
   dispatch(doGetUserDataFieldsRequestPost());
-  fetch('/server/user/userDataField')
+  fetch('/server/user/getUserDataFields',{
+    method: 'get',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.loginState){
+      dispatch(doGetUserDataFieldsReceiveSuccessPost(res.userDataFields));
+    }
+    else if(res.err){
+      dispatch(doGetUserDataFieldsReceiveOtherErrorPost());
+    }
+    else{
+      dispatch(doGetUserDataFieldsReceiveLoginErrorPost());
+      errCallback && errCallback();
+    }
+  })
 }

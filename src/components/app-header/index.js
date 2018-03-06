@@ -13,7 +13,7 @@ if(!window.Promise){
     window.Promise=Promise
 }
 
-let pathnames= ['/user/userData']
+let pathnames= ['/user/userData', '/user/userOrder']
 
 class AppHeader extends React.Component{
   constructor(props){
