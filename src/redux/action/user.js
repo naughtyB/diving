@@ -52,7 +52,9 @@ export const SUBMIT_USER_DATA_REQUEST_POST = 'SUBMIT_USER_DATA_REQUEST_POST';
 
 export const SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST = 'SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST';
 
-export const SUBMIT_USER_DATA_RECEIVE_ERROR_POST = 'SUBMIT_USER_DATA_RECEIVE_ERROR_POST';
+export const SUBMIT_USER_DATA_RECEIVE_OTHER_ERROR_POST = 'SUBMIT_USER_DATA_RECEIVE_OTHER_ERROR_POST';
+
+export const SUBMIT_USER_DATA_RECEIVE_LOGIN_ERROR_POST = 'SUBMIT_USER_DATA_RECEIVE_LOGIN_ERROR_POST';
 
 //获取用户数据
 export const GET_USER_DATA_FIELDS_REQUEST_POST = 'GET_USER_DATA_FIELDS_REQUEST_POST';
@@ -242,18 +244,52 @@ export const doSubmitUserDataRequestPost = () => {
   }
 }
 
-export const doSubmitUserDataReceiveSuccessPost = () => {
+export const doSubmitUserDataReceiveSuccessPost = (userDataFields) => {
   return {
-    type: SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST
+    type: SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST,
+    userDataFields
   }
 }
 
-export const doSubmitUserDataReceiveErrorPost = (errorType, error) => {
+export const doSubmitUserDataReceiveOtherErrorPost = (errorType, error) => {
   return {
-    type: SUBMIT_USER_DATA_RECEIVE_ERROR_POST,
+    type: SUBMIT_USER_DATA_RECEIVE_OTHER_ERROR_POST,
     errorType,
     error
   }
+}
+
+export const doSubmitUserDataReceiveLoginErrorPost = () => {
+  return {
+    type: SUBMIT_USER_DATA_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doSubmitUserData = (username, sex, successCallback) => (dispatch) => {
+  dispatch(doSubmitUserDataRequestPost());
+  fetch('/server/user/changeUserData', {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'username=' + username + '&sex=' + sex,
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(!res.loginState){
+      dispatch(doSubmitUserDataReceiveLoginErrorPost())
+    }
+    else{
+      if(res.isSuccessful){
+        dispatch(doSubmitUserDataReceiveSuccessPost(res.userDataFields));
+        successCallback && successCallback();
+      }
+      else{
+        dispatch(doSubmitUserDataReceiveOtherErrorPost(res.errorType, res.error))
+      }
+    }
+  })
 }
 
 export const doGetUserDataFieldsRequestPost = () => {

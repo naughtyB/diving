@@ -21,14 +21,20 @@ export class AppContentUserData extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount(){
-    this.props.onGetUserDataFields(() => {
-      message.info('尚未登录，请先登录')
-    })
+    this.props.onGetUserDataFields();
   }
   handleSubmit(){
+    let preUserDataFields = this.props.preUserDataFields;
     this.props.form.validateFields(["username", "sex"],(errors,values)=>{
       if(!errors && !this.props.isSubmittingUserData){
-        this.props.onSubmitUser(values["username"], values["sex"])
+        if(preUserDataFields.username.value !== values["username"] || preUserDataFields.sex.value !== values["sex"]){
+          this.props.onSubmitUserData(values["username"], values["sex"], () => {
+            message.info('修改成功');
+          })
+        }
+        else{
+          message.info('修改成功')
+        }
       }
     })
   }
@@ -45,10 +51,8 @@ export class AppContentUserData extends React.Component{
             {getFieldDecorator('username', {
               validateFirst: true,
               rules: [
-                { required: true, message: '请输入手机号!'},
-                { pattern:/^\S+$/,message:"手机号不能包含空格"},
-                { pattern:/^\d+$/,message:"请输入正确的手机号"},
-                { len:11,message:"请输入11位数字的手机号"}
+                { required: true, message: '请输入昵称' },
+                { pattern:/[\u4e00-\u9fa5a-zA-Z0-9\-_]{4,30}/,message:"昵称为4-30个字,且不包含出_和-以外的字符"}
               ]
               })(
                   <Input disabled={true} type="text"/>
@@ -70,7 +74,8 @@ export class AppContentUserData extends React.Component{
             type="primary"
             htmlType="submit"
             className="app-content-user-data-submit-input"
-            loading={this.handleSubmit}
+            onClick={this.handleSubmit}
+            loading={this.props.isSubmittingUserData}
           >
             保存
           </Button>                
@@ -113,7 +118,8 @@ const mapStateToProps = (state) => {
     isGettingUserDataFields: state.user.isGettingUserDataFields,
     isGettingUserDataFieldsSuccessful: state.user.isGettingUserDataFieldsSuccessful,
     userDataFields: state.user.userDataFields,
-    isSubmittingUserData: state.user.isSubmittingUserData
+    isSubmittingUserData: state.user.isSubmittingUserData,
+    preUserDataFields: state.user.preUserDataFields
   }
 }
 
@@ -121,7 +127,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onGetUserDataFields: (errCallback) => dispatch(doGetUserDataFields(errCallback)),
     onChangeUserDataFields: (userDataFieldsChanged) => dispatch(doChangeUserDataFields(userDataFieldsChanged)),
-    onSubmitUserData: (username, sex) => dispatch(doSubmitUserData(username, sex))
+    onSubmitUserData: (username, sex, errCallback) => dispatch(doSubmitUserData(username, sex, errCallback))
   }
 }
 

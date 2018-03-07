@@ -38,4 +38,7 @@ app.use('/server/user/resetPassword', urlencodeParser, require('./router/resetPa
 //获取用户个人资料
 app.use('/server/user/getUserDataFields', urlencodeParser, require('./router/getUserDataFields'));
 
+//改变用户个人资料
+app.use('/server/user/changeUserData', urlencodeParser, require('./router/changeUserData'));
+
 http.createServer(app).listen(8000);

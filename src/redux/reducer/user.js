@@ -16,7 +16,8 @@ import {
   CHANGE_USER_DATA_FIELDS,
   SUBMIT_USER_DATA_REQUEST_POST,
   SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST,
-  SUBMIT_USER_DATA_RECEIVE_ERROR_POST,
+  SUBMIT_USER_DATA_RECEIVE_OTHER_ERROR_POST,
+  SUBMIT_USER_DATA_RECEIVE_LOGIN_ERROR_POST,
   GET_USER_DATA_FIELDS_REQUEST_POST,
   GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST,
   GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST,
@@ -63,9 +64,17 @@ const initialUser = {
       value: ''
     }
   },
-  userDataFields:{
+  userDataFields: {
     username: {
-      value: '你牛逼'
+      value: ''
+    },
+    sex: {
+      value: 'secret'
+    }
+  },
+  preUserDataFields:{
+    username: {
+      value: ''
     },
     sex: {
       value: 'secret'
@@ -149,9 +158,28 @@ export const user = (state = initialUser, action) => {
       return {...state, userDataFields: {...state.userDataFields, ...action.userDataFieldsChanged}};
     case SUBMIT_USER_DATA_REQUEST_POST:
       return {...state, isSubmittingUserData: true};
-    case SUBMIT_REGISTER_RECEIVE_SUCCESS_POST:
-      return {...state, isSubmittingUserData: false};
-    case SUBMIT_USER_DATA_RECEIVE_ERROR_POST:
+    case SUBMIT_USER_DATA_RECEIVE_SUCCESS_POST:
+      return {
+        ...state, 
+        isSubmittingUserData: false,
+        preUserDataFields: {
+          username: {
+            value: action.userDataFields.username
+          },
+          sex: {
+            value: action.userDataFields.sex
+          }
+        },
+        userDataFields: {
+          username: {
+            value: action.userDataFields.username
+          },
+          sex: {
+            value: action.userDataFields.sex
+          }
+        }
+      };
+    case SUBMIT_USER_DATA_RECEIVE_OTHER_ERROR_POST:
       return {
         ...state, 
         isSubmittingUserData: false,
@@ -163,6 +191,8 @@ export const user = (state = initialUser, action) => {
           }
         }
       }
+    case SUBMIT_USER_DATA_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isSubmittingUserData: false, loginState: false};
     case GET_USER_DATA_FIELDS_REQUEST_POST:
       return {...state, isGettingUserDataFields: true, isGettingUserDataFieldsSuccessful: false};
     case GET_USER_DATA_FIELDS_RECEIVE_SUCCESS_POST:
@@ -171,6 +201,14 @@ export const user = (state = initialUser, action) => {
         isGettingUserDataFields: false, 
         isGettingUserDataFieldsSuccessful: true,
         userDataFields: {
+          username: {
+            value: action.userDataFields.username
+          },
+          sex: {
+            value: action.userDataFields.sex || 'secret'
+          }
+        },
+        preDataFields: {
           username: {
             value: action.userDataFields.username
           },

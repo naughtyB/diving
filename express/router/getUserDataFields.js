@@ -7,7 +7,7 @@ module.exports = (req, res) => {
       res.json({err: '网络发生错误'})
     }
     else if(findUserResponse.length === 0){
-      res.json({loginState: false, err: '用户未登录'});
+      res.json({loginState: false});
     }
     else{
       res.json({loginState: true, userDataFields: {sex: findUserResponse[0]['sex'], username: findUserResponse[0]['username']}})
