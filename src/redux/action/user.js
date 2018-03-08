@@ -9,7 +9,7 @@ if(!window.Promise){
 
 
 //改变登录框的显示
-export const CHANGE_USER_MODAL_VISIBLE = 'CHANGE_USER_MODAL_VISIBLE';
+export const CHANGE_USER_LOGIN_MODAL_VISIBLE = 'CHANGE_USER_LOGIN_MODAL_VISIBLE';
 
 //改变用户登录资料
 export const CHANGE_USER_LOGIN_FIELDS = 'CHANGE_USER_LOGIN_FIELDS';
@@ -65,12 +65,43 @@ export const GET_USER_DATA_FIELDS_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_DATA_FIEL
 
 export const GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST = 'GET_USER_DATA_FIELDS_RECEIVE_OTHER_ERROR_POST';
 
+//获取用户人员列表
+export const GET_USER_PERSON_REQUEST_POST = 'GET_USER_PERSON_REQUEST_POST';
 
+export const GET_USER_PERSON_RECEIVE_SUCCESS_POST = 'GET_USER_PERSON_RECEIVE_SUCCESS_POST';
 
-export const doChangeUserModalVisible = (modalVisible) => {
+export const GET_USER_PERSON_RECEIVE_OTHER_ERROR_POST = 'GET_USER_PERSON_RECEIVE_OTHER_ERROR_POST';
+
+export const GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST';
+
+//改变添加用户人员弹出框的显示
+export const CHANGE_USER_PERSON_MODAL_VISIBLE = 'CHANGE_USER_PERSON_MODAL_VISIBLE';
+
+//改变用户人员弹出框信息
+export const CHANGE_USER_PERSON_MODAL_FIELDS = 'CHANGE_USER_PERSON_MODAL_FIELDS'; 
+
+//用户添加修改人员
+export const SUBMIT_USER_PERSON_MODAL_FIELDS_REQUEST_POST = 'SUBMIT_USER_PERSON_MODAL_FIELDS_REQUEST_POST'; 
+
+export const SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_SUCCESS_POST = 'SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_SUCCESS_POST';
+
+export const SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST = 'SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST';
+
+export const SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST = 'SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST';
+
+//删除人员
+export const DELETE_USER_PERSON_REQUEST_POST = 'DELETE_USER_PERSON_REQUEST_POST';
+
+export const DELETE_USER_PERSON_RECEIVE_SUCCESS_POST = 'DELETE_USER_PERSON_RECEIVE_SUCCESS_POST';
+
+export const DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST = 'DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST';
+
+export const DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST = 'DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST';
+
+export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
-    type: CHANGE_USER_MODAL_VISIBLE,
-    modalVisible
+    type: CHANGE_USER_LOGIN_MODAL_VISIBLE,
+    loginModalVisible
   }
 }
 
@@ -272,7 +303,7 @@ export const doSubmitUserData = (username, sex, successCallback) => (dispatch) =
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
     },
-    body: 'username=' + username + '&sex=' + sex,
+    body: 'username=' + encodeURIComponent(username) + '&sex=' + encodeURIComponent(sex),
     credentials: 'include'
   }).then(res => {
     return res.json();
@@ -317,7 +348,7 @@ export const doGetUserDataFieldsReceiveLoginErrorPost = () => {
   }
 }
 
-export const doGetUserDataFields = (errCallback) => (dispatch) => {
+export const doGetUserDataFields = () => (dispatch) => {
   dispatch(doGetUserDataFieldsRequestPost());
   fetch('/server/user/getUserDataFields',{
     method: 'get',
@@ -336,7 +367,204 @@ export const doGetUserDataFields = (errCallback) => (dispatch) => {
     }
     else{
       dispatch(doGetUserDataFieldsReceiveLoginErrorPost());
-      errCallback && errCallback();
     }
   })
 }
+
+export const doGetUserPersonRequestPost = () => {
+  return {
+    type: GET_USER_PERSON_REQUEST_POST
+  }
+}
+
+export const doGetUserPersonReceiveSuccessPost = (person) => {
+  return {
+    type: GET_USER_PERSON_RECEIVE_SUCCESS_POST,
+    person
+  }
+}
+
+export const doGetUserPersonReceiveOtherErrorPost = () => {
+  return {
+    type: GET_USER_PERSON_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doGetUserPersonReceiveLoginErrorPost = () => {
+  return {
+    type: GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doGetUserPerson = () => (dispatch) => {
+  dispatch(doGetUserPersonRequestPost());
+  fetch('/server/user/getUserPerson', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.loginState){
+      dispatch(doGetUserPersonReceiveSuccessPost(res.person));
+    }
+    else if(res.err){
+      dispatch(doGetUserPersonReceiveOtherErrorPost());
+    }
+    else{
+      dispatch(doGetUserPersonReceiveLoginErrorPost());
+    }
+  })
+}
+
+export const doChangeUserPersonModalVisible = (personModalVisible, personModalType, name, mobileNumber, currentPersonId) => {
+  return {
+    type: CHANGE_USER_PERSON_MODAL_VISIBLE,
+    personModalVisible,
+    personModalType,
+    name,
+    mobileNumber,
+    currentPersonId
+  }
+}
+
+export const doChangeUserPersonModalFields = (personModalFieldsChanged) => {
+  return {
+    type: CHANGE_USER_PERSON_MODAL_FIELDS,
+    personModalFieldsChanged
+  }
+}
+
+export const doSubmitUserPersonModalFieldsRequestPost = () => {
+  return {
+    type: SUBMIT_USER_PERSON_MODAL_FIELDS_REQUEST_POST
+  }
+}
+
+export const doSubmitUserPersonModalFieldsReceiveSuccessPost = (person) => {
+  return {
+    type: SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_SUCCESS_POST,
+    person
+  }
+}
+
+export const doSubmitUserPersonModalFieldsReceiveLoginErrorPost = () => {
+  return {
+    type: SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doSubmitUserPersonModalFieldsReceiveOtherErrorPost = (errorType, error) => {
+  return {
+    type: SUBMIT_USER_PERSON_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST,
+    errorType,
+    error
+  }
+}
+
+export const doSubmitUserPersonModalFields = (submitType, name, mobileNumber, personId) => (dispatch) => {
+  dispatch(doSubmitUserPersonModalFieldsRequestPost());
+  if(submitType === 'add'){
+    fetch('/server/user/addUserPerson', {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'name=' + encodeURIComponent(name) + '&mobileNumber=' + encodeURIComponent(mobileNumber),
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doSubmitUserPersonModalFieldsReceiveSuccessPost(res.person));
+    }
+    else{
+      if(res.error){
+        dispatch(doSubmitUserPersonModalFieldsReceiveOtherErrorPost(res.errorType, res.error))
+      }
+      else{
+        dispatch(doSubmitUserPersonModalFieldsReceiveLoginErrorPost());
+      }
+    }
+  })
+  }
+  else if(submitType === 'modify'){
+    fetch('/server/user/modifyUserPerson', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      body: 'name=' + encodeURIComponent(name) + '&mobileNumber=' + encodeURIComponent(mobileNumber) + '&personId=' + personId,
+      credentials: 'include'
+    }).then(res => {
+      return res.json();
+    }).then(res => {
+      if(res.isSuccessful){
+        dispatch(doSubmitUserPersonModalFieldsReceiveSuccessPost(res.person));
+      }
+      else{
+        if(res.error){
+          dispatch(doSubmitUserPersonModalFieldsReceiveOtherErrorPost(res.errorType, res.error))
+        }
+        else{
+          dispatch(doSubmitUserPersonModalFieldsReceiveLoginErrorPost());
+        }
+      }
+    })
+  }
+}
+
+export const doDeleteUserPersonRequestPost = () => {
+  return {
+    type: DELETE_USER_PERSON_REQUEST_POST
+  }
+}
+
+export const doDeleteUserPersonReceiveSuccessPost = (person) => {
+  return {
+    type: DELETE_USER_PERSON_RECEIVE_SUCCESS_POST,
+    person
+  }
+}
+
+export const doDeleteUserPersonReceiveOtherErrorPost = () => {
+  return {
+    type: DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doDeleteUserPersonReceiveLoginErrorPost = () => {
+  return {
+    type: DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doDeleteUserPerson = (personId, successCallback, errCallback) => (dispatch) => {
+  dispatch(doDeleteUserPersonRequestPost());
+  fetch('/server/user/deleteUserPerson', {
+    method: 'post',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'personId=' + encodeURIComponent(personId),
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doDeleteUserPersonReceiveSuccessPost(res.person));
+      successCallback && successCallback();
+    }
+    else if(res.error){
+      dispatch(doDeleteUserPersonReceiveOtherErrorPost());
+      errCallback && errCallback();
+    }
+    else{
+      dispatch(doDeleteUserPersonReceiveLoginErrorPost());
+    }
+  })
+}
+
+

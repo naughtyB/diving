@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     res.json({isSuccessful: false, errorType: "captcha", error: "验证码错误"})
   }
   else{
-    let userMessage={mobileNumber: decodeURIComponent(req.body.mobileNumber), password: decodeURIComponent(req.body.password), username: decodeURIComponent(req.body.username)};
+    let userMessage={mobileNumber: decodeURIComponent(req.body.mobileNumber), password: decodeURIComponent(req.body.password), username: decodeURIComponent(req.body.username), sex: 'secret'};
     User.find({mobileNumber: userMessage.mobileNumber}, (err, findMobileNumberResponse) => {
       if(err){
         res.json({isSuccessful: false, errorType: "captcha", error: "发生错误!请重新提交"})

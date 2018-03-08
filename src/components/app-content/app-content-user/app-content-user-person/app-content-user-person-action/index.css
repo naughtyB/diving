@@ -1,0 +1,4 @@
+.app-content-user-person-table-column-action-modify, .app-content-user-person-table-column-action-delete{
+  cursor: pointer;
+  color:#1890ff;
+}

@@ -37,7 +37,8 @@ let UserSchema = new Schema({
   mobileNumber: String,
   password: String,
   username: String,
-  sex: String
+  sex: String,
+  person: [{name: String, mobileNumber: String}]
 })
 
 let User = mongoose.model("user", UserSchema);

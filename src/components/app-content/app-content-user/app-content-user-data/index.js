@@ -27,14 +27,9 @@ export class AppContentUserData extends React.Component{
     let preUserDataFields = this.props.preUserDataFields;
     this.props.form.validateFields(["username", "sex"],(errors,values)=>{
       if(!errors && !this.props.isSubmittingUserData){
-        if(preUserDataFields.username.value !== values["username"] || preUserDataFields.sex.value !== values["sex"]){
-          this.props.onSubmitUserData(values["username"], values["sex"], () => {
-            message.info('修改成功');
-          })
-        }
-        else{
-          message.info('修改成功')
-        }
+        this.props.onSubmitUserData(values["username"], values["sex"], () => {
+          message.info('修改成功');
+        })
       }
     })
   }
@@ -118,14 +113,13 @@ const mapStateToProps = (state) => {
     isGettingUserDataFields: state.user.isGettingUserDataFields,
     isGettingUserDataFieldsSuccessful: state.user.isGettingUserDataFieldsSuccessful,
     userDataFields: state.user.userDataFields,
-    isSubmittingUserData: state.user.isSubmittingUserData,
-    preUserDataFields: state.user.preUserDataFields
+    isSubmittingUserData: state.user.isSubmittingUserData
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetUserDataFields: (errCallback) => dispatch(doGetUserDataFields(errCallback)),
+    onGetUserDataFields: () => dispatch(doGetUserDataFields()),
     onChangeUserDataFields: (userDataFieldsChanged) => dispatch(doChangeUserDataFields(userDataFieldsChanged)),
     onSubmitUserData: (username, sex, errCallback) => dispatch(doSubmitUserData(username, sex, errCallback))
   }

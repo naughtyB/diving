@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
 import AppContentUserData from './app-content-user-data/index.js';
 import AppContentUserOrder from './app-content-user-order/index.js';
+import AppContentUserPerson from './app-content-user-person/index.js';
+import AppContentUserAddress from './app-content-user-address/index.js';
 import { doChangeLoginState } from '../../../redux/action/user';
 import './index.css'
 
 let timer = null;
-let pathnames = ['/user/userData', '/user/userOrder'];
+let pathnames = ['/user/userData', '/user/userOrder', '/user/userPerson', 'user/userAddress'];
 
 export class AppContentUser extends React.Component{
   constructor(props){
@@ -92,6 +94,12 @@ export class AppContentUser extends React.Component{
               <Menu.Item key="userOrder" className="app-content-user-menu-each">
                 我的订单
               </Menu.Item>
+              <Menu.Item key="userPerson" className="app-content-user-menu-each">
+                潜水人员管理
+              </Menu.Item>
+              <Menu.Item key="userAddress" className="app-content-user-menu-each">
+                收货地址管理
+              </Menu.Item>
             </Menu>
           </div>
           <div className="app-content-user-introduce">
@@ -108,6 +116,24 @@ export class AppContentUser extends React.Component{
               exact path="/user/userOrder"
               render={({history,location})=>{
                 return <AppContentUserOrder
+                  history={history}
+                  location={location}
+                />
+              }}
+            />
+            <Route
+              exact path="/user/userPerson"
+              render={({history,location})=>{
+                return <AppContentUserPerson
+                  history={history}
+                  location={location}
+                />
+              }}
+            />
+            <Route
+              exact path="/user/userAddress"
+              render={({history,location})=>{
+                return <AppContentUserAddress
                   history={history}
                   location={location}
                 />

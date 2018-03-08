@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Tabs } from 'antd';
 import { connect } from 'react-redux';
-import { doChangeUserModalVisible } from '../../../redux/action/user.js';
+import { doChangeUserLoginModalVisible } from '../../../redux/action/user.js';
 import AppHeaderUserLogin from './app-header-user-login/index.js';
 import AppHeaderUserRegister from './app-header-user-register/index.js';
 import AppHeaderUserResetPassword from './app-header-user-resetPassword/index.js';
@@ -16,8 +16,8 @@ export class AppHeaderUser extends React.Component{
     return (
       <Modal 
         className="app-header-user"
-        visible={this.props.modalVisible}
-        onCancel={() => {this.props.onChangeUserModalVisible(false)}}
+        visible={this.props.loginModalVisible}
+        onCancel={() => {this.props.onChangeUserLoginModalVisible(false)}}
         maskClosable={false}
         footer={null}
       >
@@ -45,13 +45,13 @@ export class AppHeaderUser extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    modalVisible: state.user.modalVisible,
+    loginModalVisible: state.user.loginModalVisible,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible))
+    onChangeUserLoginModalVisible: (modalVisible) => dispatch(doChangeUserLoginModalVisible(modalVisible))
   }
 }
 

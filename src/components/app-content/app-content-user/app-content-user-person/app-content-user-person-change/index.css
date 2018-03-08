@@ -1,0 +1,23 @@
+.app-content-user-person-change{
+  width: 420px !important;
+}
+
+.app-content-user-person-change .ant-tabs-bar{
+  margin-bottom: 24px;
+}
+
+.app-content-user-person-change .ant-modal-body{
+  padding: 48px 24px 24px;
+}
+
+.app-content-user-person-change .ant-tabs-nav-scroll{
+  padding: 0 0 0 24px;
+}
+
+.app-content-user-person-change .ant-form-item{
+  margin-bottom: 20px;
+}
+
+.app-content-user-person-change-frame{
+  padding: 0 24px 0 24px;
+}

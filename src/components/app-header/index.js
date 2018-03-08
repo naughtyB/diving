@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import AppHeaderUser from './app-header-user/index.js';
-import { doChangeUserModalVisible, doChangeLoginState } from '../../redux/action/user.js';
+import { doChangeUserLoginModalVisible, doChangeLoginState } from '../../redux/action/user.js';
 import fetch from "isomorphic-fetch";
 import Promise from "promise-polyfill";
 
@@ -13,7 +13,7 @@ if(!window.Promise){
     window.Promise=Promise
 }
 
-let pathnames= ['/user/userData', '/user/userOrder']
+let pathnames= ['/user/userData', '/user/userOrder', 'user/userPerson', 'user/userAddress'];
 
 class AppHeader extends React.Component{
   constructor(props){
@@ -83,7 +83,7 @@ class AppHeader extends React.Component{
       }
     }
     else{
-      this.props.onChangeUserModalVisible(true);
+      this.props.onChangeUserLoginModalVisible(true);
     }
   }
   render() {
@@ -152,7 +152,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeUserModalVisible: (modalVisible) => dispatch(doChangeUserModalVisible(modalVisible))
+    onChangeUserLoginModalVisible: (loginModalVisible) => dispatch(doChangeUserLoginModalVisible(loginModalVisible))
   }
 }
 
