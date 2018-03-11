@@ -1,0 +1,27 @@
+.app-header-menu-user-popover{
+  width: 96px !important;
+  right: 50px !important;
+  top: 70.8px !important;
+}
+
+.app-header-menu-user-popover .ant-popover-inner-content{
+  padding: 0;
+}
+
+.app-header-menu-user-popover-list{
+  list-style: none;
+  padding: 0;
+}
+
+.app-header-menu-user-popover-list-item{
+  height: 40px;
+  line-height: 40px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+  cursor: pointer;
+}
+
+.app-header-menu-user-popover-list-item:hover{
+  background-color: #e6f7ff;
+  color: rgb(24, 144, 255);
+}

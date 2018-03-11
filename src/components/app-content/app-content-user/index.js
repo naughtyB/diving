@@ -5,12 +5,12 @@ import { withRouter, Route } from 'react-router-dom';
 import AppContentUserData from './app-content-user-data/index.js';
 import AppContentUserOrder from './app-content-user-order/index.js';
 import AppContentUserPerson from './app-content-user-person/index.js';
-import AppContentUserAddress from './app-content-user-address/index.js';
+import AppContentUserDelivery from './app-content-user-delivery/index.js';
 import { doChangeLoginState } from '../../../redux/action/user';
 import './index.css'
 
 let timer = null;
-let pathnames = ['/user/userData', '/user/userOrder', '/user/userPerson', 'user/userAddress'];
+let pathnames = ['/user/userData', '/user/userOrder', '/user/userPerson', '/user/userDelivery'];
 
 export class AppContentUser extends React.Component{
   constructor(props){
@@ -97,7 +97,7 @@ export class AppContentUser extends React.Component{
               <Menu.Item key="userPerson" className="app-content-user-menu-each">
                 潜水人员管理
               </Menu.Item>
-              <Menu.Item key="userAddress" className="app-content-user-menu-each">
+              <Menu.Item key="userDelivery" className="app-content-user-menu-each">
                 收货地址管理
               </Menu.Item>
             </Menu>
@@ -131,9 +131,9 @@ export class AppContentUser extends React.Component{
               }}
             />
             <Route
-              exact path="/user/userAddress"
+              exact path="/user/userDelivery"
               render={({history,location})=>{
-                return <AppContentUserAddress
+                return <AppContentUserDelivery
                   history={history}
                   location={location}
                 />

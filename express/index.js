@@ -53,4 +53,16 @@ app.use('/server/user/modifyUserPerson', urlencodeParser, require('./router/modi
 //删除用户人员
 app.use('/server/user/deleteUserPerson', urlencodeParser, require('./router/deleteUserPerson'));
 
+//获取用户收货地址列表
+app.use('/server/user/getUserDelivery', urlencodeParser, require('./router/getUserDelivery'));
+
+//添加用户收货地址
+app.use('/server/user/addUserDelivery', urlencodeParser, require('./router/addUserDelivery'));
+
+//修改用户收货地址
+app.use('/server/user/modifyUserDelivery', urlencodeParser, require('./router/modifyUserDelivery'));
+
+//删除用户收货地址
+app.use('/server/user/deleteUserDelivery', urlencodeParser, require('./router/deleteUserDelivery'));
+
 http.createServer(app).listen(8000);

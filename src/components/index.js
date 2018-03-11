@@ -37,7 +37,7 @@ class AppLayout extends Component {
     return (
       <BrowserRouter>
         <Layout>
-          <Header style={{backgroundColor: 'white', height: 'auto', boxShadow: '0 2px 8px #f0f1f2', position: 'relative', zIndex: '10'}}>
+          <Header className="app-layout-header">
             <AppHeader/>
           </Header>
           <Content>

@@ -98,6 +98,40 @@ export const DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST = 'DELETE_USER_PERSON_R
 
 export const DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST = 'DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST';
 
+//获取用户收货信息列表
+
+export const GET_USER_DELIVERY_REQUEST_POST = 'GET_USER_DELIVERY_REQUEST_POST';
+
+export const GET_USER_DELIVERY_RECEIVE_SUCCESS_POST = 'GET_USER_DELIVERY_RECEIVE_SUCCESS_POST';
+
+export const GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST = 'GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST';
+
+export const GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST';
+
+//改变添加用户收货弹出框的显示
+export const CHANGE_USER_DELIVERY_MODAL_VISIBLE = 'CHANGE_USER_DELIVERY_MODAL_VISIBLE';
+
+//改变用户收货弹出框信息
+export const CHANGE_USER_DELIVERY_MODAL_FIELDS = 'CHANGE_USER_DELIVERY_MODAL_FIELDS'; 
+
+//用户添加修改收货地址
+export const SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST = 'SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST'; 
+
+export const SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_SUCCESS_POST = 'SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_SUCCESS_POST';
+
+export const SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST = 'SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST';
+
+export const SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST = 'SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST';
+
+//删除人员
+export const DELETE_USER_DELIVERY_REQUEST_POST = 'DELETE_USER_DELIVERY_REQUEST_POST';
+
+export const DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST = 'DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST';
+
+export const DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST = 'DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST';
+
+export const DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST = 'DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST';
+
 export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
     type: CHANGE_USER_LOGIN_MODAL_VISIBLE,
@@ -567,4 +601,200 @@ export const doDeleteUserPerson = (personId, successCallback, errCallback) => (d
   })
 }
 
+export const doGetUserDeliveryRequestPost = () => {
+  return {
+    type: GET_USER_DELIVERY_REQUEST_POST
+  }
+}
 
+export const doGetUserDeliveryReceiveSuccessPost = (delivery) => {
+  return {
+    type: GET_USER_DELIVERY_RECEIVE_SUCCESS_POST,
+    delivery
+  }
+}
+
+export const doGetUserDeliveryReceiveOtherErrorPost = () => {
+  return {
+    type: GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doGetUserDeliveryReceiveLoginErrorPost = () => {
+  return {
+    type: GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doGetUserDelivery = () => (dispatch) => {
+  dispatch(doGetUserDeliveryRequestPost());
+  fetch('/server/user/getUserDelivery', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.loginState){
+      dispatch(doGetUserDeliveryReceiveSuccessPost(res.delivery));
+    }
+    else if(res.err){
+      dispatch(doGetUserDeliveryReceiveOtherErrorPost());
+    }
+    else{
+      dispatch(doGetUserDeliveryReceiveLoginErrorPost());
+    }
+  })
+}
+
+
+export const doChangeUserDeliveryModalVisible = (deliveryModalVisible, deliveryModalType, name, mobileNumber, address, currentDeliveryId) => {
+  return {
+    type: CHANGE_USER_DELIVERY_MODAL_VISIBLE,
+    deliveryModalVisible,
+    deliveryModalType,
+    name,
+    mobileNumber,
+    address,
+    currentDeliveryId
+  }
+}
+
+export const doChangeUserDeliveryModalFields = (deliveryModalFieldsChanged) => {
+  return {
+    type: CHANGE_USER_DELIVERY_MODAL_FIELDS,
+    deliveryModalFieldsChanged
+  }
+}
+
+export const doSubmitUserDeliveryModalFieldsRequestPost = () => {
+  return {
+    type: SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST
+  }
+}
+
+export const doSubmitUserDeliveryModalFieldsReceiveSuccessPost = (delivery) => {
+  return {
+    type: SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_SUCCESS_POST,
+    delivery
+  }
+}
+
+export const doSubmitUserDeliveryModalFieldsReceiveLoginErrorPost = () => {
+  return {
+    type: SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doSubmitUserDeliveryModalFieldsReceiveOtherErrorPost = (errorType, error) => {
+  return {
+    type: SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST,
+    errorType,
+    error
+  }
+}
+
+export const doSubmitUserDeliveryModalFields = (submitType, name, mobileNumber, address, deliveryId) => (dispatch) => {
+  dispatch(doSubmitUserDeliveryModalFieldsRequestPost());
+  if(submitType === 'add'){
+    fetch('/server/user/addUserDelivery', {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'name=' + encodeURIComponent(name) + '&mobileNumber=' + encodeURIComponent(mobileNumber) + '&address=' + encodeURIComponent(address),
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doSubmitUserDeliveryModalFieldsReceiveSuccessPost(res.delivery));
+    }
+    else{
+      if(res.error){
+        dispatch(doSubmitUserDeliveryModalFieldsReceiveOtherErrorPost(res.errorType, res.error))
+      }
+      else{
+        dispatch(doSubmitUserDeliveryModalFieldsReceiveLoginErrorPost());
+      }
+    }
+  })
+  }
+  else if(submitType === 'modify'){
+    fetch('/server/user/modifyUserDelivery', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      body: 'name=' + encodeURIComponent(name) + '&mobileNumber=' + encodeURIComponent(mobileNumber) + '&deliveryId=' + deliveryId + '&address=' + encodeURIComponent(address),
+      credentials: 'include'
+    }).then(res => {
+      return res.json();
+    }).then(res => {
+      if(res.isSuccessful){
+        dispatch(doSubmitUserDeliveryModalFieldsReceiveSuccessPost(res.delivery));
+      }
+      else{
+        if(res.error){
+          dispatch(doSubmitUserDeliveryModalFieldsReceiveOtherErrorPost(res.errorType, res.error))
+        }
+        else{
+          dispatch(doSubmitUserDeliveryModalFieldsReceiveLoginErrorPost());
+        }
+      }
+    })
+  }
+}
+
+export const doDeleteUserDeliveryRequestPost = () => {
+  return {
+    type: DELETE_USER_DELIVERY_REQUEST_POST
+  }
+}
+
+export const doDeleteUserDeliveryReceiveSuccessPost = (delivery) => {
+  return {
+    type: DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST,
+    delivery
+  }
+}
+
+export const doDeleteUserDeliveryReceiveOtherErrorPost = () => {
+  return {
+    type: DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doDeleteUserDeliveryReceiveLoginErrorPost = () => {
+  return {
+    type: DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doDeleteUserDelivery = (deliveryId, successCallback, errCallback) => (dispatch) => {
+  dispatch(doDeleteUserDeliveryRequestPost());
+  fetch('/server/user/deleteUserDelivery', {
+    method: 'post',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'deliveryId=' + encodeURIComponent(deliveryId),
+    credentials: 'include'
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doDeleteUserDeliveryReceiveSuccessPost(res.delivery));
+      successCallback && successCallback();
+    }
+    else if(res.error){
+      dispatch(doDeleteUserDeliveryReceiveOtherErrorPost());
+      errCallback && errCallback();
+    }
+    else{
+      dispatch(doDeleteUserDeliveryReceiveLoginErrorPost());
+    }
+  })
+}

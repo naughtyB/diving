@@ -35,7 +35,21 @@ import {
   DELETE_USER_PERSON_REQUEST_POST,
   DELETE_USER_PERSON_RECEIVE_SUCCESS_POST,
   DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST,
-  DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST
+  DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST,
+  GET_USER_DELIVERY_REQUEST_POST,
+  GET_USER_DELIVERY_RECEIVE_SUCCESS_POST,
+  GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST,
+  GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST,
+  CHANGE_USER_DELIVERY_MODAL_VISIBLE,
+  CHANGE_USER_DELIVERY_MODAL_FIELDS,
+  SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST,
+  SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_SUCCESS_POST,
+  SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST,
+  SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST,
+  DELETE_USER_DELIVERY_REQUEST_POST,
+  DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST,
+  DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST,
+  DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -94,8 +108,21 @@ const initialUser = {
       value: ''
     }
   },
+  deliveryModalFields: {
+    name: {
+      value: ''
+    },
+    mobileNumber: {
+      value: ''
+    },
+    address: {
+      value: ''
+    }
+  },
   person: [],
+  delivery: [],
   currentPersonId: '',
+  currentDeliveryId: '',
   loginModalVisible: false,
   isLogging: false,
   isRegistering: false,
@@ -107,10 +134,15 @@ const initialUser = {
   isSubmittingUserData: false,
   loginState: false,
   personModalVisible: false,
+  deliveryModalVisible: false,
   personModalType: 'add',
-  SUBMIT_USER_PERSON_MODAL_FIELDS_REQUEST_POST,
+  deliveryModalType: 'add',
   isSubmittingPersonModalFields: false,
-  isDeletingUserPerson: false
+  isSubmittingDeliveryModalFields: false,
+  isDeletingUserPerson: false,
+  isDeletingUserDelivery: false,
+  isGettingUserDelivery: false,
+  isGettingUserDeliverySuccessful: false
 }
 
 export const user = (state = initialUser, action) => {
@@ -278,6 +310,60 @@ export const user = (state = initialUser, action) => {
       return {...state, isDeletingUserPerson: false};
     case DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST:
       return {...state, isDeletingUserPerson: false, loginState: false};
+    case GET_USER_DELIVERY_REQUEST_POST:
+      return {...state, isGettingUserDelivery: true, isGettingUserDeliverySuccessful: false};
+    case GET_USER_DELIVERY_RECEIVE_SUCCESS_POST:
+      return {...state, isGettingUserDelivery: false, isGettingUserDeliverySuccessful: true, delivery: action.delivery};
+    case GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isGettingUserDelivery: false, isGettingUserDeliverySuccessful: false};
+    case GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isGettingUserDelivery: false, isGettingUserDeliverySuccessful: false, loginState: false};
+    case CHANGE_USER_DELIVERY_MODAL_VISIBLE:
+      return {
+        ...state, 
+        currentDeliveryId: action.currentDeliveryId,
+        deliveryModalVisible: action.deliveryModalVisible, 
+        deliveryModalType: action.deliveryModalType,
+        deliveryModalFields: {
+          name: {
+            value: action.deliveryModalType === 'add' ? '' : action.deliveryModalType === 'modify' ?  action.name : ''
+          },
+          mobileNumber: {
+            value: action.deliveryModalType === 'add' ? '' : action.deliveryModalType === 'modify' ?  action.mobileNumber : ''
+          },
+          address: {
+            value: action.deliveryModalType === 'add' ? '' : action.deliveryModalType === 'modify' ?  action.address : ''
+          },
+        }
+      };
+    case CHANGE_USER_DELIVERY_MODAL_FIELDS:
+      return {...state, deliveryModalFields: {...state.deliveryModalFields, ...action.deliveryModalFieldsChanged}};
+    case SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST:
+      return {...state, isSubmittingDeliveryModalFields: true};
+    case SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_SUCCESS_POST:
+      return {...state, delivery: action.delivery, deliveryModalVisible: false, isSubmittingDeliveryModalFields: false};
+    case SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isSubmittingDeliveryModalFields: false, loginState: false, deliveryModalVisible: false};
+    case SUBMIT_USER_DELIVERY_MODAL_FIELDS_RECEIVE_OTHER_ERROR_POST:
+      return {
+        ...state, 
+        isSubmittingDeliveryModalFields: false,
+        deliveryModalFields: {
+          ...state.deliveryModalFields,
+          [action.errorType]: {
+            ...state.deliveryModalFields[action.errorType],
+            errors: [{field: action.errorType, message: action.error}]
+          }
+        }
+      }
+    case DELETE_USER_DELIVERY_REQUEST_POST:
+      return {...state, isDeletingUserDelivery: true};
+    case DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST:
+      return {...state, isDeletingUserDelivery: false, delivery: action.delivery};
+    case DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isDeletingUserDelivery: false};
+    case DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isDeletingUserDelivery: false, loginState: false};
     default:
       return state;
   }

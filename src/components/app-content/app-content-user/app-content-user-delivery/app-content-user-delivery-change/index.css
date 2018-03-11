@@ -1,0 +1,23 @@
+.app-content-user-delivery-change{
+  width: 420px !important;
+}
+
+.app-content-user-delivery-change .ant-tabs-bar{
+  margin-bottom: 24px;
+}
+
+.app-content-user-delivery-change .ant-modal-body{
+  padding: 48px 24px 24px;
+}
+
+.app-content-user-delivery-change .ant-tabs-nav-scroll{
+  padding: 0 0 0 24px;
+}
+
+.app-content-user-delivery-change .ant-form-item{
+  margin-bottom: 20px;
+}
+
+.app-content-user-delivery-change-frame{
+  padding: 0 24px 0 24px;
+}

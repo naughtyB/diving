@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Icon, Divider, Button, Spin } from 'antd';
+import { Table, Icon, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
 import { doGetUserPerson, doChangeUserPersonModalVisible } from '../../../../redux/action/user';
 import AppContentUserPersonChange from './app-content-user-person-change/index.js';

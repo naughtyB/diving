@@ -10,7 +10,7 @@ module.exports = (req, res) => {
       res.json({isSuccessful: false, loginState: false});
     }
     else{
-      User.update(userMessage, {"$push":{delivery: {name: decodeURIComponent(req.body.name), mobileNumber: decodeURIComponent(req.body.mobileNumber)}}}, (err, response) => {
+      User.update(userMessage, {"$push":{delivery: {name: decodeURIComponent(req.body.name), mobileNumber: decodeURIComponent(req.body.mobileNumber), address: decodeURIComponent(req.body.address)}}}, (err, response) => {
         User.find(userMessage, (err, findUserResponse) => {
           if(err){
             res.json({isSuccessful: false, error: "发生错误!请直接刷新页面", errorType: "mobileNumber"})

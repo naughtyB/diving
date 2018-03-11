@@ -56,3 +56,11 @@
   flex: 1 1;
   background-color: white;
 }
+
+.app-layout-header{
+  position: relative;
+  height: auto;
+  background-color: white;
+  box-shadow: 0 2px 8px #f0f1f2;
+  z-index: 10;
+}

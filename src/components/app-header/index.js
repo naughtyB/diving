@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Popover } from 'antd';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
@@ -7,13 +7,14 @@ import AppHeaderUser from './app-header-user/index.js';
 import { doChangeUserLoginModalVisible, doChangeLoginState } from '../../redux/action/user.js';
 import fetch from "isomorphic-fetch";
 import Promise from "promise-polyfill";
+import './index.css';
 
 //兼容性处理
 if(!window.Promise){
     window.Promise=Promise
 }
 
-let pathnames= ['/user/userData', '/user/userOrder', 'user/userPerson', 'user/userAddress'];
+let pathnames= ['/user/userData', '/user/userOrder', 'user/userPerson', 'user/userDelivery'];
 
 class AppHeader extends React.Component{
   constructor(props){
@@ -22,6 +23,24 @@ class AppHeader extends React.Component{
       selectedKeys: ['homepage']
     }
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.handleListClick = this.handleListClick.bind(this);
+    this.handleLogOff = this.handleLogOff.bind(this);
+  }
+  handleListClick(e){
+    let pathname = e.target.getAttribute('data-href');
+    if(this.props.history.location.pathname != pathname){
+      this.props.history.push({
+        pathname
+      })
+    }
+    e.stopPropagation();
+  }
+  handleLogOff(e){
+    this.props.onChangeLoginState(false);
+    this.props.history.push({
+      pathname: '/'
+    });
+    e.stopPropagation();
   }
   componentDidUpdate(preProps){
     const pathname = this.props.location.pathname;
@@ -87,6 +106,9 @@ class AppHeader extends React.Component{
     }
   }
   render() {
+    const style = {backgroundColor: '#e6f7ff', color: 'rgb(24, 144, 255)'};
+    const pathname = this.props.history.location.pathname;
+    console.log(pathname);
     return (
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <div className="logo" style={{width: '206px'}}>
@@ -128,7 +150,21 @@ class AppHeader extends React.Component{
               this.props.loginState ? 
               (
                 <Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>               
-                  个人中心
+                  <Popover 
+                    overlayClassName="app-header-menu-user-popover"
+                    placement="bottom"
+                    content={
+                      <ul className="app-header-menu-user-popover-list" onClick={this.handleListClick}>
+                        <li className="app-header-menu-user-popover-list-item" style={pathname === '/user/userData' ? style : {}} data-href="/user/userData">个人信息</li>
+                        <li className="app-header-menu-user-popover-list-item" style={pathname === '/user/userOrder' ? style : {}} data-href="/user/userOrder">我的订单</li>
+                        <li className="app-header-menu-user-popover-list-item" style={pathname === '/user/userPerson' ? style : {}} data-href="/user/userPerson">潜水人员管理</li>
+                        <li className="app-header-menu-user-popover-list-item" style={pathname === '/user/userDelivery' ? style : {}} data-href="/user/userDelivery">收货地址管理</li>
+                        <li className="app-header-menu-user-popover-list-item" onClick={this.handleLogOff}>注销</li>                        
+                      </ul>
+                    }
+                  >
+                    个人中心
+                  </Popover>
                 </Menu.Item>
               ) :
               (
@@ -152,7 +188,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeUserLoginModalVisible: (loginModalVisible) => dispatch(doChangeUserLoginModalVisible(loginModalVisible))
+    onChangeUserLoginModalVisible: (loginModalVisible) => dispatch(doChangeUserLoginModalVisible(loginModalVisible)),
+    onChangeLoginState: (loginState) => dispatch(doChangeLoginState(loginState))
   }
 }
 
