@@ -20,11 +20,28 @@ class AppHeader extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      selectedKeys: ['homepage']
+      selectedKeys: ['homepage'],
+      visible: false
     }
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.handleListClick = this.handleListClick.bind(this);
     this.handleLogOff = this.handleLogOff.bind(this);
+    this.handleItemMouseEnter = this.handleItemMouseEnter.bind(this);
+    this.handleItemMouseLeave = this.handleItemMouseLeave.bind(this);
+  }
+  handleItemMouseEnter(){
+    this.setState(() => {
+      return {
+        visible: true
+      }
+    })
+  }
+  handleItemMouseLeave(){
+    this.setState(() => {
+      return {
+        visible: false
+      }
+    })
   }
   handleListClick(e){
     let pathname = e.target.getAttribute('data-href');
@@ -108,7 +125,6 @@ class AppHeader extends React.Component{
   render() {
     const style = {backgroundColor: '#e6f7ff', color: 'rgb(24, 144, 255)'};
     const pathname = this.props.history.location.pathname;
-    console.log(pathname);
     return (
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <div className="logo" style={{width: '206px'}}>
@@ -149,10 +165,16 @@ class AppHeader extends React.Component{
             {
               this.props.loginState ? 
               (
-                <Menu.Item key="user" style={{height: '80px', lineHeight: '80px'}}>               
+                <Menu.Item 
+                  key="user" 
+                  style={{height: '80px', lineHeight: '80px'}}
+                  onMouseEnter={this.handleItemMouseEnter}
+                  onMouseLeave={this.handleItemMouseLeave}
+                >               
                   <Popover 
                     overlayClassName="app-header-menu-user-popover"
                     placement="bottom"
+                    visible={this.state.visible}
                     content={
                       <ul className="app-header-menu-user-popover-list" onClick={this.handleListClick}>
                         <li className="app-header-menu-user-popover-list-item" style={pathname === '/user/userData' ? style : {}} data-href="/user/userData">个人信息</li>

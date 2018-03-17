@@ -35,6 +35,11 @@ export class AppContentUserPerson extends React.Component{
   componentWillMount(){
     this.props.onGetUserPerson();
   }
+  onRow(record, index){
+    return {
+      onClick: (e) => console.log(e.target)
+    }
+  }
   render(){
     const {isGettingUserPerson, isGettingUserPersonSuccessful, person} = this.props;
     if(!isGettingUserPerson && isGettingUserPersonSuccessful){
@@ -50,7 +55,7 @@ export class AppContentUserPerson extends React.Component{
             <div className="app-content-user-person-add-frame">
               <Button type="primary" className="app-content-user-person-add-button" onClick={this.handleAdd}>添加</Button>
             </div>
-            <Table  columns={columns} dataSource={data} pagination={false} locale={{emptyText: '暂无人员，请先添加'}}></Table>
+            <Table className="app-content-user-person-table" onRow={this.onRow} columns={columns} dataSource={data} pagination={false} locale={{emptyText: '暂无人员，请先添加'}}></Table>
             <AppContentUserPersonChange/>
           </div>
         </Spin>

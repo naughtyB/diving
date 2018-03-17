@@ -1,14 +1,32 @@
+import moment from "moment";
 import { 
   GET_PRACTICE_DATA_REQUEST_POST,
   GET_PRACTICE_DATA_RECEIVE_SUCCESS_POST,
   GET_PRACTICE_DATA_RECEIVE_ERROR_POST,
-  CHANGE_PRACTICE_DISPLAY_INDEX
+  CHANGE_PRACTICE_DISPLAY_INDEX,
+  CHANGE_PRACTICE_APPOINTMENT_FIRST_DIELDS,
+  CHANGE_PRACTICE_APPOINTMENT_STEP
 } from '../action/practice.js';
+
+const date = new Date();
+date.setTime(date.getTime() + 86400000);
 
 const initialPractice = {
   data:[],
   isGettingData: true,
-  displayIndex: -1
+  displayIndex: -1,
+  practiceAppointmentStep: 1,
+  practiceAppointmentFirstFields: {
+    gymnasium: {
+      value: ''
+    },
+    practiceDate: {
+      value: moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(), 'YYYY-MM-DD')
+    },
+    practiceTime: {
+      value: ''
+    }
+  }
 }
 
 export const practice = (state = initialPractice , action) => {
@@ -21,6 +39,10 @@ export const practice = (state = initialPractice , action) => {
       return {...state, isGettingData: true};
     case CHANGE_PRACTICE_DISPLAY_INDEX:
       return {...state, displayIndex: action.displayIndex};
+    case CHANGE_PRACTICE_APPOINTMENT_FIRST_DIELDS:
+      return {...state, practiceAppointmentFirstFields: {...state.practiceAppointmentFirstFields, ...action.practiceAppointmentFirstFieldsChanged}}
+    case CHANGE_PRACTICE_APPOINTMENT_STEP:
+      return {...state, practiceAppointmentStep: action.practiceAppointmentStep}
     default:
       return state;
   }

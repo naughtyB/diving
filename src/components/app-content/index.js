@@ -17,7 +17,6 @@ export class AppContent extends React.Component{
           key="homepage"
           exact path='/'
           render={({history,location})=>{
-            console.log(1234);
             return <AppContentHomepage
               history={history}
               location={location}

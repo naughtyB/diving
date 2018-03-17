@@ -42,6 +42,13 @@ export class AppContentUser extends React.Component{
           message.info('请先进行登录');
         },5000)
       }
+      else{
+        this.setState(() => {
+          return {
+            selectedKeys: [this.props.location.pathname.replace(/\/user\/([\S\s]+)/, '$1')]
+          }
+        })
+      }
     }
     else{
       this.props.history.push({

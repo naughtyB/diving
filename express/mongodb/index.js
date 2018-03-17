@@ -28,7 +28,8 @@ let PracticeSchema = new Schema({
   imgUrl: String,
   name: String,
   address: String,
-  detail: [{title: String, content: String}]
+  detail: [{title: String, content: String}],
+  practiceTime: [{date: String, time: String}]
 })
 
 let Practice = mongoose.model("practice", PracticeSchema);
