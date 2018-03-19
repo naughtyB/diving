@@ -1,7 +1,7 @@
 import React from 'react';
 import { Divider, Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
-import { doChangeUserPersonModalVisible, doDeleteUserPerson } from '../../../../../redux/action/user';
+import { doChangeUserPersonModalVisible, doDeleteUserPerson, doChangeUserPersonSelectedRowKeys } from '../../../../../redux/action/user';
 import './index.css';
 
 export class AppContentUserPersonAction extends React.Component{
@@ -12,7 +12,11 @@ export class AppContentUserPersonAction extends React.Component{
   }
   handleDelete(){
     this.props.onDeleteUserPerson(this.props.record['_id'], ()=>{
-      message.info('删除成功')
+      message.info('删除成功');
+      let key = this.props.record['_id'].key;
+      this.props.onChangeUserPersonSelectedRowKeys(this.props.personSelectedRowKeys.filter((item, index) => {
+        return item !== key;
+      }))
     },()=>{
       message.info('删除失败')
     })
@@ -38,14 +42,16 @@ const mapStateToProps = (state) => {
   return {
     isGettingUserPerson: state.user.isGettingUserPerson,
     isGettingUserPersonSuccessful: state.user.isGettingUserPersonSuccessful,
-    person: state.user.person
+    person: state.user.person,
+    personSelectedRowKeys: state.user.personSelectedRowKeys
   }
 } 
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onChangeUserPersonModalVisible: (personModalVisible, personModalType, name, mobileNumber, currentPersonId) => dispatch(doChangeUserPersonModalVisible(personModalVisible, personModalType, name, mobileNumber, currentPersonId)),
-    onDeleteUserPerson: (personId, successCallback, errCallback) => dispatch(doDeleteUserPerson(personId, successCallback, errCallback))
+    onDeleteUserPerson: (personId, successCallback, errCallback) => dispatch(doDeleteUserPerson(personId, successCallback, errCallback)),
+    onChangeUserPersonSelectedRowKeys: (personSelectedRowKeys) => dispatch(doChangeUserPersonSelectedRowKeys(personSelectedRowKeys))
   }
 }
 

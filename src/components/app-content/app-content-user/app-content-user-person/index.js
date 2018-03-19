@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Icon, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
-import { doGetUserPerson, doChangeUserPersonModalVisible } from '../../../../redux/action/user';
+import { doGetUserPerson, doChangeUserPersonModalVisible, doChangeUserPersonSelectedRowKeys } from '../../../../redux/action/user';
 import AppContentUserPersonChange from './app-content-user-person-change/index.js';
 import AppContentUserPersonAction from './app-content-user-person-action/index.js';
 import './index.css';
@@ -28,6 +28,10 @@ export class AppContentUserPerson extends React.Component{
   constructor(props){
     super(props);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+  }
+  handleSelectChange(selectedRowKeys){
+    this.props.onChangeUserPersonSelectedRowKeys(selectedRowKeys);
   }
   handleAdd(){
     this.props.onChangeUserPersonModalVisible(true, 'add');
@@ -35,27 +39,26 @@ export class AppContentUserPerson extends React.Component{
   componentWillMount(){
     this.props.onGetUserPerson();
   }
-  onRow(record, index){
-    return {
-      onClick: (e) => console.log(e.target)
-    }
-  }
   render(){
-    const {isGettingUserPerson, isGettingUserPersonSuccessful, person} = this.props;
+    const {isGettingUserPerson, isGettingUserPersonSuccessful, person, beCanSelected, personSelectedRowKeys } = this.props;
     if(!isGettingUserPerson && isGettingUserPersonSuccessful){
       const data = person.map((item, index) => {
         return {
           ...item,
-          key: index.toString()
+          key: item['_id']
         }
       })
+      const rowSelection = beCanSelected ? {
+        selectedRowKeys: personSelectedRowKeys,
+        onChange: this.handleSelectChange
+      } : null;
       return (
         <Spin spinning={this.props.isDeletingUserPerson}>
           <div>
             <div className="app-content-user-person-add-frame">
               <Button type="primary" className="app-content-user-person-add-button" onClick={this.handleAdd}>添加</Button>
             </div>
-            <Table className="app-content-user-person-table" onRow={this.onRow} columns={columns} dataSource={data} pagination={false} locale={{emptyText: '暂无人员，请先添加'}}></Table>
+            <Table className="app-content-user-person-table" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} locale={{emptyText: '暂无人员，请先添加'}}></Table>
             <AppContentUserPersonChange/>
           </div>
         </Spin>
@@ -81,14 +84,16 @@ const mapStateToProps = (state) => {
     isGettingUserPerson: state.user.isGettingUserPerson,
     isGettingUserPersonSuccessful: state.user.isGettingUserPersonSuccessful,
     person: state.user.person,
-    isDeletingUserPerson: state.user.isDeletingUserPerson
+    isDeletingUserPerson: state.user.isDeletingUserPerson,
+    personSelectedRowKeys: state.user.personSelectedRowKeys
   }
 } 
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetUserPerson: () => dispatch(doGetUserPerson()),
-    onChangeUserPersonModalVisible: (personModalVisible, personModalType) => dispatch(doChangeUserPersonModalVisible(personModalVisible, personModalType))
+    onChangeUserPersonModalVisible: (personModalVisible, personModalType) => dispatch(doChangeUserPersonModalVisible(personModalVisible, personModalType)),
+    onChangeUserPersonSelectedRowKeys: (personSelectedRowKeys) => dispatch(doChangeUserPersonSelectedRowKeys(personSelectedRowKeys))
   }
 }
 

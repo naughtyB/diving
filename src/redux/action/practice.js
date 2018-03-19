@@ -38,7 +38,7 @@ export const doGetPracticeDataReceiveErrorPost = () => {
 
 export const doGetPracticeData = (message) => (dispatch) => {
   dispatch(doGetPracticeDataRequestPost());
-  fetch('/server/practice/data',{
+  return fetch('/server/practice/data',{
     method: 'get',
     headers:{
       "Content-Type":"application/x-www-form-urlencoded"
@@ -46,7 +46,6 @@ export const doGetPracticeData = (message) => (dispatch) => {
   }).then(res => {
     return res.json()
   }).then(res => {
-    console.log(res)
     if(res.error){
       dispatch(doGetPracticeDataReceiveErrorPost());
       message.error("发生错误，请重新刷新")
@@ -77,3 +76,4 @@ export const doChangePracticeAppointmentStep = (practiceAppointmentStep) => {
     practiceAppointmentStep
   }
 }
+

@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import { Steps, Button, message } from 'antd';
 import AppContentPracticeAppointmentFirst from './app-content-practice-appointment-first/index.js';
 import AppContentPracticeAppointmentSecond from './app-content-practice-appointment-second/index.js';
+import AppContentPracticeAppointmentThird from './app-content-practice-appointment-third/index.js';
 import './index.css';
 const Step = Steps.Step;
 
 const steps = [{
   title: '选择练习地点和时段',
-  content: <AppContentPracticeAppointmentFirst/>,
+  content: <AppContentPracticeAppointmentFirst/>
 }, {
   title: '添加练习人员',
-  content: <AppContentPracticeAppointmentSecond/>,
+  content: <AppContentPracticeAppointmentSecond/>
 }, {
   title: '付款',
-  content: 'Last-content',
+  content: <AppContentPracticeAppointmentThird/>
 }]
 
 export class AppContentPracticeAppointment extends React.Component{

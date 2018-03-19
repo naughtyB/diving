@@ -32,7 +32,7 @@ export const doGetHomepageDataReceiveErrorPost = () => {
 
 export const doGetHomepageData = (message) => (dispatch) => {
   dispatch(doGetHomepageDataRequestPost());
-  fetch('/server/homepage/data',{
+  return fetch('/server/homepage/data',{
     method: 'get',
     headers:{
       "Content-Type":"application/x-www-form-urlencoded"

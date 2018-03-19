@@ -1,26 +1,45 @@
 import { Card, Icon, Spin, message } from 'antd';
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import Description from './description.js';
-import { doGetPracticeData, doChangePracticeDisplayIndex } from '../../../redux/action/practice.js';
+import { doGetPracticeData, doChangePracticeDisplayIndex, doChangePracticeAppointmentStep, doChangePracticeAppointmentFirstFields } from '../../../redux/action/practice.js';
 import './index.css';
 const { Meta } = Card;
 
 export class AppContentPractice extends React.Component{
   constructor(props){
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleDetail = this.handleDetail.bind(this);
+    this.handleOrder = this.handleOrder.bind(this);
   }
   componentWillMount(){
     this.props.onGetPracticeData(message);
   }
-  handleClick(displayIndex){
+  handleDetail(displayIndex){
     if(this.props.displayIndex == displayIndex){
       this.props.onChangePracticeDisplayIndex(-1);
     }
     else{
       this.props.onChangePracticeDisplayIndex(displayIndex);
     }
+  }
+  handleOrder(item){
+    this.props.history.push({
+      pathname: '/practice/appointment'
+    });
+    this.props.onChangePracticeAppointmentStep(0);
+    const date = new Date();
+    date.setTime(date.getTime() + 86400000);
+    this.props.onChangePracticeAppointmentFirstFields({
+      gymnasium: {
+        value: item.name
+      },
+      practiceDate: {
+        value: moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(), 'YYYY-MM-DD')
+      },
+      practiceTime: ''
+    })
   }
   render(){
     const data = this.props.practiceData;
@@ -33,7 +52,7 @@ export class AppContentPractice extends React.Component{
             hoverable={true}
             className="app-content-practice-card"
             cover={<img alt={item.name} src={item.imgUrl} />}
-            actions={[<Icon type="appointment" />, <Icon type="detail" onClick={()=>this.handleClick(index)}/>]}
+            actions={[<Icon type="appointment" onClick={()=>this.handleOrder(item)}/>, <Icon type="detail" onClick={()=>this.handleDetail(index)}/>]}
           >
             <Meta
               description={<Description style={{maxHeight: index == this.props.displayIndex ? '400px' : '53px' }} data={
@@ -85,7 +104,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetPracticeData: (message) => dispatch(doGetPracticeData(message)),
-    onChangePracticeDisplayIndex: (displayIndex) => dispatch(doChangePracticeDisplayIndex(displayIndex))
+    onChangePracticeDisplayIndex: (displayIndex) => dispatch(doChangePracticeDisplayIndex(displayIndex)),
+    onChangePracticeAppointmentStep: (step) => dispatch(doChangePracticeAppointmentStep(step)),
+    onChangePracticeAppointmentFirstFields: (fieldsChanged) => dispatch(doChangePracticeAppointmentFirstFields(fieldsChanged))
   }
 }
 

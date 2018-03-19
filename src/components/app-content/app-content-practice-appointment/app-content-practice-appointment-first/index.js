@@ -1,8 +1,9 @@
 import React from 'react';
-import { Form, Select, DatePicker, Button, Spin } from 'antd';
+import { Form, Select, DatePicker, Button, Spin, message } from 'antd';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { doChangePracticeAppointmentFirstFields, doGetPracticeData, doChangePracticeAppointmentStep } from '../../../../redux/action/practice';
+import { doChangeUserLoginModalVisible } from '../../../../redux/action/user';
 import './index.css';
 const FormItem = Form.Item; 
 const Option = Select.Option;
@@ -19,11 +20,6 @@ const formItemLayout = {
 export class AppContentPracticeAppointmentFirst extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      datePickerDisabled: true,
-      practiceTimeDisabled: true
-    }
-    this.handleGymnasiumChange = this.handleGymnasiumChange.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.disabledDate = this.disabledDate.bind(this);
   }
@@ -44,33 +40,13 @@ export class AppContentPracticeAppointmentFirst extends React.Component{
   handleNext(){
     this.props.form.validateFields(["gymnasium", "practiceDate", "practiceTime"],(errors,values)=>{
       if(!errors){
-        this.props.onChangePracticeAppointmentStep(1)
-      }
-    })
-  }
-  componentWillUpdate(nextProps, nextState){
-    let nextForm = this.props.form;
-    let nextPracticeDate = nextForm.getFieldValue('practiceDate');
-    let nextGymnasium = nextForm.getFieldValue('gymnasium');
-    if(nextGymnasium && nextPracticeDate && nextState.practiceTimeDisabled){
-      this.setState(() => {
-        return {
-          practiceTimeDisabled: false
+        if(this.props.loginState){
+          this.props.onChangePracticeAppointmentStep(1)
         }
-      })
-    }
-    else if((!nextGymnasium || !nextPracticeDate) && !nextState.practiceTimeDisabled){
-      this.setState(() => {
-        return {
-          practiceTimeDisabled: true
+        else{
+          message.info('请先登录');
+          this.props.onChangeUserLoginModalVisible(true);
         }
-      })
-    }
-  }
-  handleGymnasiumChange(value){
-    this.setState(() => {
-      return {
-        datePickerDisabled: value ? false : true
       }
     })
   }
@@ -110,7 +86,7 @@ export class AppContentPracticeAppointmentFirst extends React.Component{
                     ]
                     })
                     (
-                      <DatePicker disabled={this.state.datePickerDisabled} disabledDate={this.disabledDate}/>
+                      <DatePicker disabledDate={this.disabledDate}/>
                     )
                   }
                 </FormItem>
@@ -122,7 +98,7 @@ export class AppContentPracticeAppointmentFirst extends React.Component{
                     ]
                     })
                     (
-                      <Select disabled={this.state.practiceTimeDisabled}>
+                      <Select>
                         {(gymnasium && practiceDate) ? data.filter((item, index) => {
                           return item.name === gymnasium;
                         })[0]['practiceTime'].filter((item, index) => {
@@ -155,13 +131,14 @@ export class AppContentPracticeAppointmentFirst extends React.Component{
 
 const options = {
   onFieldsChange(props, changedFields) {
-    if(changedFields['practiceDate']){
+    if(changedFields['practiceDate'] && changedFields['gymnasium'] && changedFields['practiceTime']){
+      props.onChangePracticeAppointmentFirstFields(changedFields);
+    }
+    else if(changedFields['practiceDate']){
       props.onChangePracticeAppointmentFirstFields({...changedFields, practiceTime: {...props.firstFields.practiceTime, value: ''}})
     }
     else if(changedFields['gymnasium']){
-      let date = new Date();
-      date.setTime(date.getTime() + 86400000);
-      props.onChangePracticeAppointmentFirstFields({...changedFields, practiceTime: {...props.firstFields.practiceTime, value: ''}, practiceDate: {...props.firstFields.practiceDate, value: moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(), 'YYYY-MM-DD')}})
+      props.onChangePracticeAppointmentFirstFields({...changedFields, practiceTime: {...props.firstFields.practiceTime, value: ''}, practiceDate: null})
     }
     else{
       props.onChangePracticeAppointmentFirstFields(changedFields);
@@ -186,7 +163,8 @@ const mapStateToProps = (state) => {
   return {
     firstFields: state.practice.practiceAppointmentFirstFields,
     isGettingData: state.practice.isGettingData,
-    data: state.practice.data
+    data: state.practice.data,
+    loginState: state.user.loginState
   }
 }
 
@@ -194,7 +172,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onChangePracticeAppointmentFirstFields: (practiceAppointmentFirstFields) => dispatch(doChangePracticeAppointmentFirstFields(practiceAppointmentFirstFields)),
     onGetPracticeData: () => dispatch(doGetPracticeData()),
-    onChangePracticeAppointmentStep: (practiceAppointmentStep) => dispatch(doChangePracticeAppointmentStep(practiceAppointmentStep))
+    onChangePracticeAppointmentStep: (practiceAppointmentStep) => dispatch(doChangePracticeAppointmentStep(practiceAppointmentStep)),
+    onChangeUserLoginModalVisible: (loginModalVisible) => dispatch(doChangeUserLoginModalVisible(loginModalVisible))
   }
 }
 

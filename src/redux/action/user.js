@@ -74,6 +74,8 @@ export const GET_USER_PERSON_RECEIVE_OTHER_ERROR_POST = 'GET_USER_PERSON_RECEIVE
 
 export const GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST';
 
+export const CHANGE_USER_PERSON_SELECTED_ROW_KEYS = 'CHANGE_USER_PERSON_SELECTED_ROW_KEYS';
+
 //改变添加用户人员弹出框的显示
 export const CHANGE_USER_PERSON_MODAL_VISIBLE = 'CHANGE_USER_PERSON_MODAL_VISIBLE';
 
@@ -132,6 +134,15 @@ export const DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST = 'DELETE_USER_DELIVE
 
 export const DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST = 'DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST';
 
+//创建练习订单
+export const CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST';
+
+export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST';
+
+export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST';
+
+export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
+
 export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
     type: CHANGE_USER_LOGIN_MODAL_VISIBLE,
@@ -168,7 +179,7 @@ export const doSubmitLoginReceiveErrorPost = (errorType, error) => {
 
 export const doSubmitLogin = (mobileNumber, password) => (dispatch) => {
   dispatch(doSubmitLoginRequestPost());
-  fetch('/server/user/login',{
+  return fetch('/server/user/login',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -225,7 +236,7 @@ export const doSubmitRegisterReceiveErrorPost = (errorType, error) => {
 
 export const doSubmitRegister = (mobileNumber, password, username, captcha) => (dispatch) => {
   dispatch(doSubmitRegisterRequestPost());
-  fetch('/server/user/register',{
+  return fetch('/server/user/register',{
     method: 'post',
     headers: {
       'content-Type': 'application/x-www-form-urlencoded'
@@ -275,7 +286,7 @@ export const doSubmitResetPasswordReceiveErrorPost = (errorType, error) => {
 
 export const doSubmitResetPassword = (mobileNumber, password, captcha) => (dispatch) =>{
   dispatch(doSubmitResetPasswordRequestPost());
-  fetch('/server/user/resetPassword',{
+  return fetch('/server/user/resetPassword',{
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -332,7 +343,7 @@ export const doSubmitUserDataReceiveLoginErrorPost = () => {
 
 export const doSubmitUserData = (username, sex, successCallback) => (dispatch) => {
   dispatch(doSubmitUserDataRequestPost());
-  fetch('/server/user/changeUserData', {
+  return fetch('/server/user/changeUserData', {
     method: 'post',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
@@ -384,7 +395,7 @@ export const doGetUserDataFieldsReceiveLoginErrorPost = () => {
 
 export const doGetUserDataFields = () => (dispatch) => {
   dispatch(doGetUserDataFieldsRequestPost());
-  fetch('/server/user/getUserDataFields',{
+  return fetch('/server/user/getUserDataFields',{
     method: 'get',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
@@ -432,7 +443,7 @@ export const doGetUserPersonReceiveLoginErrorPost = () => {
 
 export const doGetUserPerson = () => (dispatch) => {
   dispatch(doGetUserPersonRequestPost());
-  fetch('/server/user/getUserPerson', {
+  return fetch('/server/user/getUserPerson', {
     method: 'get',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -451,6 +462,13 @@ export const doGetUserPerson = () => (dispatch) => {
       dispatch(doGetUserPersonReceiveLoginErrorPost());
     }
   })
+}
+
+export const doChangeUserPersonSelectedRowKeys = (personSelectedRowKeys) => {
+  return {
+    type: CHANGE_USER_PERSON_SELECTED_ROW_KEYS,
+    personSelectedRowKeys
+  }
 }
 
 export const doChangeUserPersonModalVisible = (personModalVisible, personModalType, name, mobileNumber, currentPersonId) => {
@@ -501,7 +519,7 @@ export const doSubmitUserPersonModalFieldsReceiveOtherErrorPost = (errorType, er
 export const doSubmitUserPersonModalFields = (submitType, name, mobileNumber, personId) => (dispatch) => {
   dispatch(doSubmitUserPersonModalFieldsRequestPost());
   if(submitType === 'add'){
-    fetch('/server/user/addUserPerson', {
+    return fetch('/server/user/addUserPerson', {
     method: 'post',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
@@ -525,7 +543,7 @@ export const doSubmitUserPersonModalFields = (submitType, name, mobileNumber, pe
   })
   }
   else if(submitType === 'modify'){
-    fetch('/server/user/modifyUserPerson', {
+    return fetch('/server/user/modifyUserPerson', {
       method: 'post',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
@@ -577,7 +595,7 @@ export const doDeleteUserPersonReceiveLoginErrorPost = () => {
 
 export const doDeleteUserPerson = (personId, successCallback, errCallback) => (dispatch) => {
   dispatch(doDeleteUserPersonRequestPost());
-  fetch('/server/user/deleteUserPerson', {
+  return fetch('/server/user/deleteUserPerson', {
     method: 'post',
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -628,7 +646,7 @@ export const doGetUserDeliveryReceiveLoginErrorPost = () => {
 
 export const doGetUserDelivery = () => (dispatch) => {
   dispatch(doGetUserDeliveryRequestPost());
-  fetch('/server/user/getUserDelivery', {
+  return fetch('/server/user/getUserDelivery', {
     method: 'get',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -699,7 +717,7 @@ export const doSubmitUserDeliveryModalFieldsReceiveOtherErrorPost = (errorType, 
 export const doSubmitUserDeliveryModalFields = (submitType, name, mobileNumber, address, deliveryId) => (dispatch) => {
   dispatch(doSubmitUserDeliveryModalFieldsRequestPost());
   if(submitType === 'add'){
-    fetch('/server/user/addUserDelivery', {
+    return fetch('/server/user/addUserDelivery', {
     method: 'post',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
@@ -723,7 +741,7 @@ export const doSubmitUserDeliveryModalFields = (submitType, name, mobileNumber, 
   })
   }
   else if(submitType === 'modify'){
-    fetch('/server/user/modifyUserDelivery', {
+    return fetch('/server/user/modifyUserDelivery', {
       method: 'post',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
@@ -775,7 +793,7 @@ export const doDeleteUserDeliveryReceiveLoginErrorPost = () => {
 
 export const doDeleteUserDelivery = (deliveryId, successCallback, errCallback) => (dispatch) => {
   dispatch(doDeleteUserDeliveryRequestPost());
-  fetch('/server/user/deleteUserDelivery', {
+  return fetch('/server/user/deleteUserDelivery', {
     method: 'post',
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -795,6 +813,57 @@ export const doDeleteUserDelivery = (deliveryId, successCallback, errCallback) =
     }
     else{
       dispatch(doDeleteUserDeliveryReceiveLoginErrorPost());
+    }
+  })
+}
+
+export const doCreatePracticeAppointmentOrderReuqestPost = () => {
+  return {
+    type: CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST
+  }
+}
+
+export const doCreatePracticeAppointmentOrderReceiveSuccessPost = () => {
+  return {
+    type: CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doCreatePracticeAppointmentOrderReceiveOtherErrorPost = () => {
+  return {
+    type: CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doCreatePracticeAppointmentOrderReceiveLoginErrorPost = () => {
+  return {
+    type: CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doCreatePracticeAppointmentOrder = (orderData, successCallback, otherErrCallback, loginErrCallback) => (dispatch) => {
+  dispatch(doCreatePracticeAppointmentOrderReuqestPost());
+  return fetch('/server/practiceAppointment/createOrder', {
+    method: 'post',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body: orderData,
+    credentials: 'include'
+  }).then((res) => {
+    return res.json();
+  }).then((res) => {
+    if(res.isSuccessful){
+      dispatch(doCreatePracticeAppointmentOrderReceiveSuccessPost());
+      successCallback && successCallback();
+    }
+    else if(res.error){
+      dispatch(doCreatePracticeAppointmentOrderReceiveOtherErrorPost());
+      otherErrCallback && otherErrCallback();
+    }
+    else{
+      dispatch(doCreatePracticeAppointmentOrderReceiveLoginErrorPost());
+      loginErrCallback && loginErrCallback();
     }
   })
 }

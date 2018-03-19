@@ -45,8 +45,18 @@ let UserSchema = new Schema({
 
 let User = mongoose.model("user", UserSchema);
 
+let PracticeOrderSchema = new Schema({
+  user: {type: Schema.Types.ObjectId, ref: "user"},
+  person: [{name: String, mobileNumber: String}],
+  practiceTime: {date: String, time: String},
+  practice: {type: Schema.Types.ObjectId, ref: "practice"}
+})
+
+let PracticeOrder = mongoose.model("practiceOrder", PracticeOrderSchema)
+
 module.exports={
   Homepage,
   Practice,
-  User
+  User,
+  PracticeOrder
 };

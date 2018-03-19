@@ -8,20 +8,19 @@ import {
   CHANGE_PRACTICE_APPOINTMENT_STEP
 } from '../action/practice.js';
 
-const date = new Date();
-date.setTime(date.getTime() + 86400000);
+
 
 const initialPractice = {
   data:[],
   isGettingData: true,
   displayIndex: -1,
-  practiceAppointmentStep: 1,
+  practiceAppointmentStep: 0,
   practiceAppointmentFirstFields: {
     gymnasium: {
       value: ''
     },
     practiceDate: {
-      value: moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(), 'YYYY-MM-DD')
+      value: null
     },
     practiceTime: {
       value: ''
@@ -42,7 +41,7 @@ export const practice = (state = initialPractice , action) => {
     case CHANGE_PRACTICE_APPOINTMENT_FIRST_DIELDS:
       return {...state, practiceAppointmentFirstFields: {...state.practiceAppointmentFirstFields, ...action.practiceAppointmentFirstFieldsChanged}}
     case CHANGE_PRACTICE_APPOINTMENT_STEP:
-      return {...state, practiceAppointmentStep: action.practiceAppointmentStep}
+      return {...state, practiceAppointmentStep: action.practiceAppointmentStep};
     default:
       return state;
   }

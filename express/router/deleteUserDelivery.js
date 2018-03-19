@@ -3,7 +3,6 @@ let User = require("../mongodb/index")["User"];
 module.exports = (req, res) => {
   let userMessage={mobileNumber: req.cookies.mobileNumber, _id: req.cookies.userId};
   User.update(userMessage, {"$pull":{delivery: {_id: decodeURIComponent(req.body.deliveryId)}}}, (err,response) => {
-    console.log(err)
     if(err){
       res.json({isSuccessful: false, error: "发生错误!请重新删除"})
     }

@@ -134,6 +134,7 @@ export class AppContentUser extends React.Component{
                 return <AppContentUserPerson
                   history={history}
                   location={location}
+                  beCanSelected={false}
                 />
               }}
             />

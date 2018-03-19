@@ -26,6 +26,7 @@ import {
   GET_USER_PERSON_RECEIVE_SUCCESS_POST,
   GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST,
   GET_USER_PERSON_RECEIVE_OTHER_ERROR_POST,
+  CHANGE_USER_PERSON_SELECTED_ROW_KEYS,
   CHANGE_USER_PERSON_MODAL_VISIBLE,
   CHANGE_USER_PERSON_MODAL_FIELDS,
   SUBMIT_USER_PERSON_MODAL_FIELDS_REQUEST_POST,
@@ -49,7 +50,11 @@ import {
   DELETE_USER_DELIVERY_REQUEST_POST,
   DELETE_USER_DELIVERY_RECEIVE_SUCCESS_POST,
   DELETE_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST,
-  DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST
+  DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST,
+  CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST,
+  CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST,
+  CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST,
+  CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -142,7 +147,9 @@ const initialUser = {
   isDeletingUserPerson: false,
   isDeletingUserDelivery: false,
   isGettingUserDelivery: false,
-  isGettingUserDeliverySuccessful: false
+  isGettingUserDeliverySuccessful: false,
+  personSelectedRowKeys: [],
+  isCreatingPracticeOrder: false,
 }
 
 export const user = (state = initialUser, action) => {
@@ -267,6 +274,8 @@ export const user = (state = initialUser, action) => {
       return {...state, isGettingUserPerson: false, isGettingUserPersonSuccessful: false};
     case GET_USER_PERSON_RECEIVE_LOGIN_ERROR_POST:
       return {...state, isGettingUserPerson: false, isGettingUserPersonSuccessful: false, loginState: false};
+    case CHANGE_USER_PERSON_SELECTED_ROW_KEYS:
+      return {...state, personSelectedRowKeys: action.personSelectedRowKeys};
     case CHANGE_USER_PERSON_MODAL_VISIBLE:
       return {
         ...state, 
@@ -364,6 +373,14 @@ export const user = (state = initialUser, action) => {
       return {...state, isDeletingUserDelivery: false};
     case DELETE_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST:
       return {...state, isDeletingUserDelivery: false, loginState: false};
+    case CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST:
+      return {...state, isCreatingPracticeOrder: true};
+    case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST:
+      return {...state, isCreatingPracticeOrder: false};
+    case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isCreatingPracticeOrder: false, loginState: false, loginModalVisible: true};
+    case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isCreatingPracticeOrder: false};
     default:
       return state;
   }
