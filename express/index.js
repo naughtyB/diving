@@ -66,7 +66,9 @@ app.use('/server/user/modifyUserDelivery', urlencodeParser, require('./router/mo
 app.use('/server/user/deleteUserDelivery', urlencodeParser, require('./router/deleteUserDelivery'));
 
 //创建练习订单
-app.use('/server/practiceAppointment/createOrder', jsonParser, require('./router/createPracticeOrder'))
+app.use('/server/practiceAppointment/createOrder', jsonParser, require('./router/createPracticeOrder'));
 
+//获取用户潜水练习订单
+app.use('/server/user/getUserPracticeOrder', urlencodeParser, require('./router/getUserPracticeOrder'));
 
 http.createServer(app).listen(8000);

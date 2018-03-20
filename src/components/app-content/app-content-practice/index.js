@@ -58,7 +58,7 @@ export class AppContentPractice extends React.Component{
               description={<Description style={{maxHeight: index == this.props.displayIndex ? '400px' : '53px' }} data={
                 [{
                   title : item.name,
-                  content : item.address
+                  content : item.price
                 }, ...item.detail]
               }/>}
               className="app-content-practice-card-meta"

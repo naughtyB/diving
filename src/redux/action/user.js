@@ -143,6 +143,18 @@ export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREAT
 
 export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
 
+//改变用户订单页面的acticeKey
+export const CHANGE_USER_ORDER_ACTIVE_KEY = 'CHANGE_USER_ORDER_ACTIVE_KEY';
+
+//获取用户练习订单
+export const GET_USER_ORDER_REQUEST_POST = 'GET_USER_ORDER_REQUEST_POST';
+
+export const GET_USER_ORDER_RECEIVE_SUCCESS_POST = 'GET_USER_ORDER_RECEIVE_SUCCESS_POST';
+
+export const GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST = 'GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST';
+
+export const GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST';
+
 export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
     type: CHANGE_USER_LOGIN_MODAL_VISIBLE,
@@ -864,6 +876,63 @@ export const doCreatePracticeAppointmentOrder = (orderData, successCallback, oth
     else{
       dispatch(doCreatePracticeAppointmentOrderReceiveLoginErrorPost());
       loginErrCallback && loginErrCallback();
+    }
+  })
+}
+
+export const doChangeUserOrderActiveKey = (orderActiveKey) => {
+  return {
+    type: CHANGE_USER_ORDER_ACTIVE_KEY,
+    orderActiveKey
+  }
+}
+
+export const doGetUserOrderRequestPost = () => {
+  return {
+    type: GET_USER_ORDER_REQUEST_POST
+  }
+}
+
+export const doGetUserOrderReceiveSuccessPost = (practiceOrder) => {
+  return {
+    type: GET_USER_ORDER_RECEIVE_SUCCESS_POST,
+    practiceOrder: practiceOrder.sort((a, b) => {
+      return Number(b.createTime) - Number(a.createTime)
+    })
+  }
+}
+
+export const doGetUserOrderReceiveOtherErrorPost = () => {
+  return {
+    type: GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doGetUserOrderReceiveLoginErrorPost = () => {
+  return {
+    type: GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doGetUserOrder = () => (dispatch) => {
+  dispatch(doGetUserOrderRequestPost());
+  return fetch('/server/user/getUserPracticeOrder', {
+    method: 'get',
+    credentials: 'include',
+    headers: {
+      'content-type' : 'application/x-www-form-urlencoded'
+    }
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doGetUserOrderReceiveSuccessPost(res.practiceOrder))
+    }
+    else if(res.err){
+      dispatch(doGetUserOrderReceiveOtherErrorPost());
+    }
+    else{
+      dispatch(doGetUserOrderReceiveLoginErrorPost());
     }
   })
 }

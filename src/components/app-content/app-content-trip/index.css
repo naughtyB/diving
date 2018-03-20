@@ -1,0 +1,45 @@
+.app-content-trip{
+  padding: 50px 0;
+}
+
+.app-content-trip-title{
+  margin-bottom: 43px;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  color: rgb(66, 68, 69);
+}
+
+.app-content-trip-area{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.app-content-trip-area-each{
+  margin: 0 22px;  
+  height: 24px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: rgb(177, 177, 177);
+}
+
+.app-content-trip-area-each:hover{
+  color: rgb(73, 201, 245)
+}
+
+.app-content-trip-display{
+  list-style:none;
+  margin: 0 auto;
+  padding: 0;
+  width: 1168px;
+}
+
+.app-content-trip-display-each{
+  float: left;
+  margin-right: 18px;
+  margin-bottom: 18px;
+}

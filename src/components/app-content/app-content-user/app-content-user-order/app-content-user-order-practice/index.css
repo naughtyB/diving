@@ -1,0 +1,26 @@
+.app-content-user-order-practice-list-avatar{
+  width: 210px;
+  height: 100px;
+}
+
+.app-content-user-order-practice-list-orderId{
+  margin-left: 20px;
+}
+
+.app-content-user-order-practice-list-description{
+  padding: 0;
+  list-style: none;
+}
+
+.app-content-user-order-practice-list-meta{
+  min-width: 600px;
+}
+
+.app-content-user-order-practice .ant-list-item-content{
+  flex: 4 4;
+  justify-content: center;
+}
+
+.app-content-user-order-practice .ant-list-item-action{
+  flex: 1 1;
+}

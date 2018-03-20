@@ -27,7 +27,7 @@ let Homepage = mongoose.model("homepage", HomepageSchema);
 let PracticeSchema = new Schema({
   imgUrl: String,
   name: String,
-  address: String,
+  price: String,
   detail: [{title: String, content: String}],
   practiceTime: [{date: String, time: String}]
 })
@@ -49,7 +49,9 @@ let PracticeOrderSchema = new Schema({
   user: {type: Schema.Types.ObjectId, ref: "user"},
   person: [{name: String, mobileNumber: String}],
   practiceTime: {date: String, time: String},
-  practice: {type: Schema.Types.ObjectId, ref: "practice"}
+  practice: {type: Schema.Types.ObjectId, ref: "practice"},
+  createTime: String,
+  status: String
 })
 
 let PracticeOrder = mongoose.model("practiceOrder", PracticeOrderSchema)

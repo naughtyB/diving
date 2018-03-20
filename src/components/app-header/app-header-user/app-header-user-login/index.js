@@ -10,6 +10,9 @@ class AppHeaderUserLogin extends React.Component{
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  componentWillMount(){
+    console.log(23)
+  }
   handleSubmit(){
     this.props.form.validateFields(["mobileNumber","password"],(errors,values)=>{
       if(!errors && ! this.props.isLogging){

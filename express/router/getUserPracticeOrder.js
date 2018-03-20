@@ -11,21 +11,12 @@ module.exports = (req, res) => {
       res.json({isSuccessful: false, loginState: false})
     }
     else{
-      let data = {
-        practiceTime: req.body.practiceTime,
-        user: req.cookies.userId,
-        practice: req.body.practiceId,
-        person: req.body.person,
-        createTime: new Date().getTime().toString(),
-        status: '已付款'
-      };
-      let newPracticeOrder = new PracticeOrder(data);
-      newPracticeOrder.save((err, saveRes) => {
+      PracticeOrder.find({'user': req.cookies.userId}).populate("practice user").exec((err, findPracticeOrderResponse) => {
         if(err){
-          res.json({isSuccessful: false, error: "发生错误!请重新提交"})
+          res.json({isSuccessful: false})
         }
         else{
-          res.json({isSuccessful: true})
+          res.json({isSuccessful: true, practiceOrder: findPracticeOrderResponse})
         }
       })
     }

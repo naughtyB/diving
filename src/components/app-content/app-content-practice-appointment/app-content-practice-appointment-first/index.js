@@ -131,13 +131,10 @@ export class AppContentPracticeAppointmentFirst extends React.Component{
 
 const options = {
   onFieldsChange(props, changedFields) {
-    if(changedFields['practiceDate'] && changedFields['gymnasium'] && changedFields['practiceTime']){
-      props.onChangePracticeAppointmentFirstFields(changedFields);
-    }
-    else if(changedFields['practiceDate']){
+    if(changedFields['practiceDate'] && props.firstFields['practiceDate'] && changedFields['practiceDate']['value'] !== props.firstFields['practiceDate']['value']){
       props.onChangePracticeAppointmentFirstFields({...changedFields, practiceTime: {...props.firstFields.practiceTime, value: ''}})
     }
-    else if(changedFields['gymnasium']){
+    else if(changedFields['gymnasium'] && changedFields['gymnasium']['value'] !== props.firstFields['gymnasium']['value']){
       props.onChangePracticeAppointmentFirstFields({...changedFields, practiceTime: {...props.firstFields.practiceTime, value: ''}, practiceDate: null})
     }
     else{
@@ -164,7 +161,8 @@ const mapStateToProps = (state) => {
     firstFields: state.practice.practiceAppointmentFirstFields,
     isGettingData: state.practice.isGettingData,
     data: state.practice.data,
-    loginState: state.user.loginState
+    loginState: state.user.loginState,
+    practiceAppointmentStep: state.practice.practiceAppointmentStep
   }
 }
 

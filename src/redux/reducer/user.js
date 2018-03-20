@@ -54,7 +54,12 @@ import {
   CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST,
   CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST,
   CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST,
-  CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
+  CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST,
+  CHANGE_USER_ORDER_ACTIVE_KEY,
+  GET_USER_ORDER_REQUEST_POST,
+  GET_USER_ORDER_RECEIVE_SUCCESS_POST,
+  GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST,
+  GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -150,6 +155,10 @@ const initialUser = {
   isGettingUserDeliverySuccessful: false,
   personSelectedRowKeys: [],
   isCreatingPracticeOrder: false,
+  orderActiveKey: 'practice',
+  practiceOrder: [],
+  isGettingUserPracticeOrder: false,
+  isGettingUserPracticeOrderSuccessful: false
 }
 
 export const user = (state = initialUser, action) => {
@@ -381,6 +390,16 @@ export const user = (state = initialUser, action) => {
       return {...state, isCreatingPracticeOrder: false, loginState: false, loginModalVisible: true};
     case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:
       return {...state, isCreatingPracticeOrder: false};
+    case CHANGE_USER_ORDER_ACTIVE_KEY:
+      return {...state, orderActiveKey: action.orderActiveKey};
+    case GET_USER_ORDER_REQUEST_POST:
+      return {...state, isGettingUserPracticeOrder: true, isGettingUserPracticeOrderSuccessful: false};
+    case GET_USER_ORDER_RECEIVE_SUCCESS_POST:
+      return {...state, isGettingUserPracticeOrder: false, practiceOrder: action.practiceOrder, isGettingUserPracticeOrderSuccessful: true};
+    case GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isGettingUserPracticeOrder: false, loginState: false, isGettingUserPracticeOrderSuccessful: false};
+    case GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isGettingUserPracticeOrder: false, isGettingUserPracticeOrderSuccessful: false};
     default:
       return state;
   }
