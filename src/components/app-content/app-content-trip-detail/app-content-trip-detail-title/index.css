@@ -1,0 +1,37 @@
+.app-content-trip-detail-title{
+  display: flex;
+  padding: 30px 0 15px;
+  height: 75px;
+}
+
+.app-content-trip-detail-title-name{
+  font-size: 20px;
+  font-weight: 400;  
+  line-height: 30px;
+  color: rgb(66, 68, 69);
+}
+
+.app-content-trip-detail-title-area{
+  padding: 8px 0 0 10px;
+  line-height: 21px;
+  font-size: 14px;
+  color: rgb(117, 117, 117);
+}
+
+.app-content-trip-detail-title-priceDetail{
+  flex: 1 1;
+}
+
+.app-content-trip-detail-title-priceDetail-float{
+  float: right;
+}
+
+.app-content-trip-detail-title-priceDetail-price{
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.app-content-trip-detail-title-priceDetail-other{
+  font-size: 14px;
+  line-height: 30px;
+}

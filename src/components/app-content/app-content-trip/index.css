@@ -31,6 +31,7 @@
   color: rgb(73, 201, 245)
 }
 
+
 .app-content-trip-display{
   list-style:none;
   margin: 0 auto;
@@ -42,4 +43,25 @@
   float: left;
   margin-right: 18px;
   margin-bottom: 18px;
+}
+
+.app-content-trip-display-each-title{
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-content-trip-display-each-title-shipName{
+  max-width: 130px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #49c9f5;
+}
+
+.app-content-trip-display-each-title-price{
+  color: #EA5238;
+}
+
+.app-content-trip-display-each-description-areaName:hover{
+  color: #28BAED;
 }

@@ -54,11 +54,55 @@ let PracticeOrderSchema = new Schema({
   status: String
 })
 
-let PracticeOrder = mongoose.model("practiceOrder", PracticeOrderSchema)
+let PracticeOrder = mongoose.model("practiceOrder", PracticeOrderSchema);
+
+let TripLineSchema = new Schema({
+  name: String,
+  totalTime: String,
+  embark: String,
+  disembark: String,
+  dives: String,
+  Des: String,
+  Route: [{title: String, process:[{step: String, do: String}]}],
+  facilities: [String],
+  amusement: [String],
+  diet: [String],
+  equipmentLeasing: [{name: String, value: String}],
+  qualification: [{name: String, value: String}]
+})
+
+let TripLine = mongoose.model("tripLine", TripLineSchema);
+
+let TripSchema = new Schema({
+  name: String,
+  areaName: String,
+  price: String,
+  imgUrl: String,
+  imgs: [String],
+  wifi: Boolean,
+  nitrox: Boolean,
+  ac: Boolean,
+  luxury: Boolean,
+  size: String,
+  guest: String,
+  about: String,
+  tripLine: {type: Schema.Types.ObjectId, ref: "tripLine"}
+})
+
+let Trip = mongoose.model("trip", TripSchema);
+
+let AbSchema = new Schema({
+  data: [{music: [{name: String}]}]
+})
+
+let Ab = mongoose.model("Ab", AbSchema)
 
 module.exports={
   Homepage,
   Practice,
   User,
-  PracticeOrder
+  PracticeOrder,
+  Ab,
+  TripLine,
+  Trip
 };

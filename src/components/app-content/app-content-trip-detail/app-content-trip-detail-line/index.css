@@ -1,0 +1,131 @@
+.app-content-trip-detail-line-title{
+  height: 40px;
+  border-bottom: 1px solid #ebebeb;
+  vertical-align: top;
+  line-height: 40px;
+}
+
+.app-content-trip-detail-line-title-icon{
+  margin-left: 40px;
+  font-size: 28px;
+  color: rgba(66, 68, 69, 0.6)
+}
+
+.app-content-trip-detail-line-title-content{
+  margin-left: 10px;
+  font-size: 16px;
+  color: rgba(66, 68, 69);
+}
+
+.app-content-trip-detail-line-content{
+  padding: 20px 40px;
+}
+
+.app-content-trip-detail-line-content-name{
+  color: rgba(66, 68, 69);
+  font-size: 16px;
+}
+
+.app-content-trip-detail-line-content-totalTime{
+  margin-left: 10px;
+  font-size: 14px;
+  color: rgb(117, 117, 117);
+}
+
+.app-content-trip-detail-line-info{
+  display: flex;
+  padding: 0 40px;
+}
+
+.app-content-trip-detail-line-info-icon{
+  width: 192px;
+  height: 120px;
+}
+
+.app-content-trip-detail-line-info-icon-image{
+  width: 192px;
+  height: 120px;
+}
+
+.app-content-trip-detail-line-info-introduction{
+  list-style: none;
+  margin-left: 20px;
+  width: 504px;
+  height: 120px;
+}
+
+.app-content-trip-detail-line-info-introduction-embark{
+  padding-left: 42px;
+  width: 200px;
+  padding-right: 10px;
+  float: left;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  background-image: url('/image/tripDetail/icon/ico-embark.png');
+  background-size: 29px auto;
+}
+
+.app-content-trip-detail-line-info-introduction-disembark{
+  padding-left: 42px;
+  width: 200px;
+  padding-right: 10px;
+  float: left;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  background-image: url('/image/tripDetail/icon/ico-disembark.png');
+  background-size: 29px auto;
+}
+
+.app-content-trip-detail-line-info-introduction-dives{
+  padding-left: 42px;
+  width: 200px;
+  padding-right: 10px;
+  float: left;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  background-image: url('/image/tripDetail/icon/ico-dives.png');
+  background-size: 29px auto;
+}
+
+.app-content-trip-detail-line-info-introduction-name{
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;  
+  color: #757575;
+}
+
+.app-content-trip-detail-line-info-introduction-area{
+  display: block;
+  font-size: 14px;
+  color: rgba(66, 68, 69);
+}
+
+.app-content-trip-detail-line-desc{
+  margin-top: 6px;
+  padding: 0 40px;
+}
+
+.app-content-trip-detail-line-route{
+  margin-top: 40px;
+  padding: 0 40px;
+}
+
+.app-content-trip-detail-line-route-name{
+  padding-left: 36px;
+  font-size: 14px;
+}
+
+.app-content-trip-detaul-line-route-content-panel{
+  list-style-type: none;
+}
+
+.app-content-trip-detaul-line-route-content{
+  padding-left: 16px;
+  font-size: 14px;  
+  line-height: 28px;
+  background: url('/image/tripDetail/icon/ico-dot.png') no-repeat 0 center;
+  background-size: 4px auto;
+}

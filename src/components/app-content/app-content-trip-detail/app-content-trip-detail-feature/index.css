@@ -1,0 +1,67 @@
+.app-content-trip-detail-feature-title{
+  border-bottom: 1px solid #EBEBEB;
+  line-height: 26px;
+  font-size: 16px;
+  padding-left: 80px;
+  background: url('/image/tripDetail/icon/ico-feature.png') no-repeat 45px -1px;
+  background-size: 23px auto;
+  padding-bottom: 6px;
+}
+
+.app-content-trip-detail-feature-panel{
+  list-style: none;
+  padding: 20px 0 15px 40px;
+}
+
+.app-content-trip-detail-feature-each-name{
+  float: left;
+  padding-left: 40px;
+  width: 200px;
+  color: #757575;
+  line-height: 20px;
+}
+
+.app-content-trip-detail-feature-each-content{
+  list-style: none;
+  width: 910px;
+  line-height: 20px;
+  overflow: hidden;
+}
+
+.app-content-trip-detail-feature-each-content-each{
+  color: #424445;
+  width: 215px;
+  background: none!important;
+  line-height: 28px;
+  margin-bottom: 16px;
+  float: left;
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  white-space: nowrap;
+  Word-break: normal;
+  text-overflow: ellipsis;
+}
+
+.app-content-trip-detail-feature-each-content-each-name{
+  display: block;
+  font-size: 12px;
+  line-height: 22px;
+  height: 22px;
+  white-space: nowrap;
+  Word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-content-trip-detail-feature-each-content-each-value{
+  font-size: 14px;
+  color: #424445;
+  margin-top: 3px;
+  display: block;
+  line-height: 22px;
+  height: 22px;
+  white-space: nowrap;
+  Word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

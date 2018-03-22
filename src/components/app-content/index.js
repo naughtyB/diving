@@ -6,6 +6,7 @@ import AppContentPractice from './app-content-practice/index.js';
 import AppContentPracticeAppointment from './app-content-practice-appointment/index.js';
 import AppContentTrip from './app-content-trip/index.js';
 import AppContentUser from './app-content-user/index.js';
+import AppContentTripDetail from './app-content-trip-detail/index.js';
 
 export class AppContent extends React.Component{
   constructor(props){
@@ -29,6 +30,16 @@ export class AppContent extends React.Component{
           key="practiceAppointment"
           render={({history,location})=>{
             return <AppContentPracticeAppointment
+              history={history}
+              location={location}
+            />
+          }}
+        />
+        <Route 
+          exact path="/trip/detail"
+          key="tripDetail"
+          render={({history,location})=>{
+            return <AppContentTripDetail
               history={history}
               location={location}
             />

@@ -71,4 +71,9 @@ app.use('/server/practiceAppointment/createOrder', jsonParser, require('./router
 //获取用户潜水练习订单
 app.use('/server/user/getUserPracticeOrder', urlencodeParser, require('./router/getUserPracticeOrder'));
 
+//获取潜水行程详细信息
+app.use('/server/trip/getTripDetailData', urlencodeParser, require('./router/getTripDetailData'));
+
+app.use('/aa', urlencodeParser, require('./router/aa'))
+
 http.createServer(app).listen(8000);

@@ -130,7 +130,7 @@ class AppHeader extends React.Component{
         <div className="logo" style={{width: '206px'}}>
           <a style={{display: 'inline-block', height: '80px', lineHeight: '80px'}}>
             <img 
-              src="/diving.png" 
+              src="/image/homepage/diving.png" 
               alt="logo"
               style={{width: '30px', verticalAlign: 'middle'}}
             />

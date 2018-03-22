@@ -1,0 +1,56 @@
+
+.app-content-trip-detail-image{
+  display: flex;
+  margin-bottom: 40px;
+  width: 1150px;
+  height: 440px;
+}
+
+.app-content-trip-detail-image-left{
+  overflow: hidden;
+  margin-right: 20px;
+  width: 712px;
+  height: 410px;
+  transition: all 500ms;
+}
+
+.app-content-trip-detail-image-left-image{
+  width: 712px;
+  height: 410px;
+  transition: all 500ms;
+}
+
+.app-content-trip-detail-image-left:hover{
+  height: 420px;
+}
+
+.app-content-trip-detail-image-left:hover .app-content-trip-detail-image-left-image{
+  transform: scale(1.1);
+}
+
+.app-content-trip-detail-image-right{
+  width: 418px;
+  height: 440px;
+}
+
+.app-content-trip-detail-image-right-frame{
+  float: left;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.app-content-trip-detail-image-right-frame:nth-of-type(odd){
+  margin-right: 18px;
+}
+
+.app-content-trip-detail-image-right-frame-image{
+  width: 200px;
+  height: 200px;
+  transition: all 500ms;
+}
+
+.app-content-trip-detail-image-right-frame-image:hover{
+  transform: scale(1.1);
+}
