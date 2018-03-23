@@ -1,4 +1,48 @@
 .app-content-trip-detail{
+  position: relative;
   margin: 0 auto;
   width: 1150px;
+}
+
+.app-content-trip-detail-affix-appointment{
+  display: flex;
+  flex-direction: column;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: skyblue;
+  cursor: pointer;
+}
+
+.app-content-trip-detail-affix-appointment:hover{
+  box-shadow: 0 0 10px 2px skyblue;
+}
+
+.app-content-trip-detail-affix-rollback{
+  display: flex;
+  flex-direction: column;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #f4364c;
+  cursor: pointer;
+}
+
+.app-content-trip-detail-affix-rollback:hover{
+  box-shadow: 0 0 10px 2px #f4364c;
+}
+
+.app-content-trip-detail-affix-icon{
+  height: 30px;
+  line-height: 40px;
+  color: white;
+  font-size: 20px;
+}
+
+.app-content-trip-detail-affix-content{
+  height: 30px;
+  line-height: 24px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
 }

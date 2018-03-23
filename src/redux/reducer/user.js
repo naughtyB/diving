@@ -385,7 +385,7 @@ export const user = (state = initialUser, action) => {
     case CREATE_PRACTICE_APPOINTMENT_ORDER_REQUEST_POST:
       return {...state, isCreatingPracticeOrder: true};
     case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST:
-      return {...state, isCreatingPracticeOrder: false};
+      return {...state, isCreatingPracticeOrder: false, personSelectedRowKeys: []};
     case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST:
       return {...state, isCreatingPracticeOrder: false, loginState: false, loginModalVisible: true};
     case CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:

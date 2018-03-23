@@ -50,9 +50,7 @@ export class AppContentTripDetailDetail extends React.Component{
         </ul>
         <div className="app-content-trip-detail-detail-about">
           <div className="app-content-trip-detail-detail-about-title">简介</div>
-          <div className="app-content-trip-detail-detail-about-content">
-            {tripDetailData.about}
-          </div>
+          <div className="app-content-trip-detail-detail-about-content" dangerouslySetInnerHTML={{__html: tripDetailData.about}}></div>
         </div>
       </div>
     )

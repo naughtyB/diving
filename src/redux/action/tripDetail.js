@@ -31,7 +31,7 @@ export const doGetTripDetailDataReceiveErrorPost = (isSuccessful) => {
   }
 }
 
-export const doGetTripDetailData = (tripId) => (dispatch) => {
+export const doGetTripDetailData = (tripId, errCallback) => (dispatch) => {
   dispatch(doGetTripDetailDataRequestPost());
   return fetch('/server/trip/getTripDetailData', {
     method: 'post',
@@ -44,6 +44,9 @@ export const doGetTripDetailData = (tripId) => (dispatch) => {
   }).then(res => {
     if(res.err){
       dispatch(doGetTripDetailDataReceiveErrorPost(res.isSuccessful))
+      if(res.isSuccessful){
+        errCallback && errCallback();
+      }
     }
     else{
       dispatch(doGetTripDetailDataReceiveSuccessPost(res.tripDetailData))

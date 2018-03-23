@@ -3,6 +3,7 @@ let Trip = require("../mongodb/index")["Trip"];
 
 module.exports = (req, res) => {
   let findMessage = {'_id': decodeURIComponent(req.body.tripId)};
+  console.log(findMessage)
   Trip.find(findMessage).populate("tripLine").exec((err, findTripDetailResponse) => {
     console.log(err);
     if(err){

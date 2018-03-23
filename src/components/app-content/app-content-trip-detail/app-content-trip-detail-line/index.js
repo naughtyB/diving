@@ -36,16 +36,14 @@ export class AppContentTripDetailLine extends React.Component{
             </li>
           </ul>
         </div>
-        <div className="app-content-trip-detail-line-desc">
-          {tripLine.Des}
-        </div>
+        <div className="app-content-trip-detail-line-desc" dangerouslySetInnerHTML={{__html: tripLine.Des}}></div>
         <div className="app-content-trip-detail-line-route">
           <Timeline>
             {
               tripLine.Route.map((item, index) => {
                 return (
                   <Timeline.Item color="blue" key={index}>
-                    <p className="app-content-trip-detail-line-route-name">{item.title}</p>
+                    <p className="app-content-trip-detail-line-route-name" dangerouslySetInnerHTML={{__html: item.title}}></p>
                     <ul className="app-content-trip-detaul-line-route-content-panel">
                       {item.process.sort((a, b) => {
                         return Number(a) - Number(b);

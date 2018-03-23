@@ -74,6 +74,9 @@ app.use('/server/user/getUserPracticeOrder', urlencodeParser, require('./router/
 //获取潜水行程详细信息
 app.use('/server/trip/getTripDetailData', urlencodeParser, require('./router/getTripDetailData'));
 
+//获取潜水行程
+app.use('/server/trip/getTripData', urlencodeParser, require('./router/getTripData'));
+
 app.use('/aa', urlencodeParser, require('./router/aa'))
 
 http.createServer(app).listen(8000);

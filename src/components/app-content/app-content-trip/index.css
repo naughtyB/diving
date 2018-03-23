@@ -24,13 +24,20 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  color: rgb(177, 177, 177);
 }
 
-.app-content-trip-area-each:hover{
-  color: rgb(73, 201, 245)
+.app-content-trip-display-each .ant-card-cover{
+  overflow: hidden !important;
 }
 
+.app-content-trip-each-img{
+  height: 171px;
+  transition: all 500ms;
+}
+
+.app-content-trip-each-img:hover{
+  transform: scale(1.1);
+}
 
 .app-content-trip-display{
   list-style:none;

@@ -23,7 +23,7 @@ export class AppContentTripDetailFeature extends React.Component{
                       )
                     }) : item.map((item, index) => {
                       return (
-                        <li className="app-content-trip-detail-feature-each-content-each">
+                        <li key={index} className="app-content-trip-detail-feature-each-content-each">
                           <span className="app-content-trip-detail-feature-each-content-each-name">{item.name}</span>
                           <span className="app-content-trip-detail-feature-each-content-each-value">{item.value}</span>
                         </li>

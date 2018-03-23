@@ -5,7 +5,7 @@ import AppContentTripDetailDetail from './app-content-trip-detail-detail/index.j
 import AppContentTripDetailLine from './app-content-trip-detail-line/index.js';
 import AppContentTripDetailFeature from './app-content-trip-detail-feature/index.js';
 import { connect } from 'react-redux';
-import { Spin } from 'antd';
+import { Spin, Affix, Icon } from 'antd';
 import { doGetTripDetailData } from '../../../redux/action/tripDetail';
 import './index.css';
 
@@ -20,16 +20,49 @@ let transformHash = (hash) => {
 
 
 export class AppContentTripDetail extends React.Component{
+  constructor(props){
+    super(props);
+    this.handleRollBack = this.handleRollBack.bind(this);
+  }
+  handleRollBack(){
+    this.props.history.push({
+      pathname: '/trip'
+    })
+  }
   componentWillMount(){
     let hash = this.props.location.hash;
     let tripId = hash && transformHash(hash)['tripId'];
-    if(tripId){
-      this.props.onGetTripDetailData(tripId);
+    if(tripId && tripId.length === 24){
+      this.props.onGetTripDetailData(tripId, () => {
+        this.props.history.push({
+          pathname: '/trip'
+        })
+      });
     }
     else{
       this.props.history.push({
-        pathanem: '/'
+        pathname: '/trip'
       })
+    }
+  }
+  componentWillUpdate(nextProps){
+    let hash = this.props.location.hash;
+    let nextHash = nextProps.location.hash;
+    let tripId = hash && transformHash(hash)['tripId'];
+    let nextTripId = nextHash && transformHash(nextHash)['tripId'];
+    if(tripId && tripId !== nextTripId){
+      if(nextTripId.length === 24){
+        this.props.onGetTripDetailData(nextTripId, () => {
+          this.props.history.push({
+            pathname: '/trip'
+          })
+        });
+      }
+      else{
+        this.props.history.push({
+          pathname: '/trip'
+        })
+      }
     }
   }
   render(){
@@ -43,6 +76,18 @@ export class AppContentTripDetail extends React.Component{
             <AppContentTripDetailDetail tripDetailData={tripDetailData}/>
             <AppContentTripDetailLine tripDetailData={tripDetailData}/>
             <AppContentTripDetailFeature tripDetailData={tripDetailData}/>
+            <Affix offsetBottom={110} style={{position: 'absolute', right: '-120px'}}>
+              <div className="app-content-trip-detail-affix-rollback" onClick={this.handleRollBack}>
+                <Icon type="rollback" className="app-content-trip-detail-affix-icon"/>
+                <span className="app-content-trip-detail-affix-content">返回</span>
+              </div>
+            </Affix>
+            <Affix offsetBottom={40} style={{position: 'absolute', right: '-120px'}}>
+              <div className="app-content-trip-detail-affix-appointment">
+                <Icon type="appointment" className="app-content-trip-detail-affix-icon"/>
+                <span className="app-content-trip-detail-affix-content">预定</span>
+              </div>
+            </Affix>
           </div>
         )
       }
@@ -77,7 +122,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetTripDetailData: (tripId) => dispatch(doGetTripDetailData(tripId))
+    onGetTripDetailData: (tripId, errCallback) => dispatch(doGetTripDetailData(tripId, errCallback))
   }
 }
 

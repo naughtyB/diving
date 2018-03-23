@@ -1,0 +1,10 @@
+.app-content-trip-appointment{
+  position: relative;
+  padding: 50px 300px;
+}
+
+.app-content-trip-appointment-backward{
+  position: absolute;
+  left: 48px;
+  top: 48px;
+}
