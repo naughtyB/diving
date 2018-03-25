@@ -59,7 +59,11 @@ import {
   GET_USER_ORDER_REQUEST_POST,
   GET_USER_ORDER_RECEIVE_SUCCESS_POST,
   GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST,
-  GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST
+  GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST,
+  CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST,
+  CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST,
+  CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST,
+  CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -158,7 +162,8 @@ const initialUser = {
   orderActiveKey: 'practice',
   practiceOrder: [],
   isGettingUserPracticeOrder: false,
-  isGettingUserPracticeOrderSuccessful: false
+  isGettingUserPracticeOrderSuccessful: false,
+  isCreatingTripOrder: false
 }
 
 export const user = (state = initialUser, action) => {
@@ -400,6 +405,14 @@ export const user = (state = initialUser, action) => {
       return {...state, isGettingUserPracticeOrder: false, loginState: false, isGettingUserPracticeOrderSuccessful: false};
     case GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST:
       return {...state, isGettingUserPracticeOrder: false, isGettingUserPracticeOrderSuccessful: false};
+      case CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST:
+      return {...state, isCreatingTripOrder: true};
+    case CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST:
+      return {...state, isCreatingTripOrder: false, personSelectedRowKeys: []};
+    case CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isCreatingTripOrder: false, loginState: false, loginModalVisible: true};
+    case CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isCreatingTripOrder: false};
     default:
       return state;
   }

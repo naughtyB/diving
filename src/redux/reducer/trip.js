@@ -2,13 +2,27 @@ import {
   GET_TRIP_DATA_REQUEST_POST,
   GET_TRIP_DATA_RECEIVE_SUCCESS_POST,
   GET_TRIP_DATA_RECEIVE_ERROR_POST,
-  CHANGE_TRIP_KEY
+  CHANGE_TRIP_KEY,
+  CHANGE_TRIP_APPOINTMENT_FIRST_DIELDS,
+  CHANGE_TRIP_APPOINTMENT_STEP
 } from '../action/trip'
 
 const initialTrip = {
   tripData: [],
   isGettingTripData: false,
-  tripKey: ''
+  tripKey: '',
+  tripAppointmentStep: 0,
+  tripAppointmentFirstFields: {
+    tripName: {
+      value: ''
+    },
+    tripMonth: {
+      value: null
+    },
+    tripDate: {
+      value: ''
+    }
+  }
 }
 
 export const trip = (state = initialTrip, action) => {
@@ -21,6 +35,10 @@ export const trip = (state = initialTrip, action) => {
       return {...state, isGettingTripData: false};
     case CHANGE_TRIP_KEY:
       return {...state, tripKey: action.tripKey};
+    case CHANGE_TRIP_APPOINTMENT_FIRST_DIELDS:
+      return {...state, tripAppointmentFirstFields: {...state.tripAppointmentFirstFields, ...action.tripAppointmentFirstFieldsChanged}}
+    case CHANGE_TRIP_APPOINTMENT_STEP:
+      return {...state, tripAppointmentStep: action.tripAppointmentStep};
     default: 
       return state;
   }

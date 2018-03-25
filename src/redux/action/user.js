@@ -143,7 +143,7 @@ export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREAT
 
 export const CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_PRACTICE_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
 
-//改变用户订单页面的acticeKey
+//改变用户订单页面的activeKey
 export const CHANGE_USER_ORDER_ACTIVE_KEY = 'CHANGE_USER_ORDER_ACTIVE_KEY';
 
 //获取用户练习订单
@@ -154,6 +154,15 @@ export const GET_USER_ORDER_RECEIVE_SUCCESS_POST = 'GET_USER_ORDER_RECEIVE_SUCCE
 export const GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST = 'GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST';
 
 export const GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_ORDER_RECEIVE_LOGIN_ERROR_POST';
+
+//创建行程订单
+export const CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST';
+
+export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST';
+
+export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST';
+
+export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
 
 export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
@@ -933,6 +942,57 @@ export const doGetUserOrder = () => (dispatch) => {
     }
     else{
       dispatch(doGetUserOrderReceiveLoginErrorPost());
+    }
+  })
+}
+
+export const doCreateTripAppointmentOrderReuqestPost = () => {
+  return {
+    type: CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST
+  }
+}
+
+export const doCreateTripAppointmentOrderReceiveSuccessPost = () => {
+  return {
+    type: CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doCreateTripAppointmentOrderReceiveOtherErrorPost = () => {
+  return {
+    type: CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doCreateTripAppointmentOrderReceiveLoginErrorPost = () => {
+  return {
+    type: CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doCreateTripAppointmentOrder = (orderData, successCallback, otherErrCallback, loginErrCallback) => (dispatch) => {
+  dispatch(doCreateTripAppointmentOrderReuqestPost());
+  return fetch('/server/tripAppointment/createOrder', {
+    method: 'post',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body: orderData,
+    credentials: 'include'
+  }).then((res) => {
+    return res.json();
+  }).then((res) => {
+    if(res.isSuccessful){
+      dispatch(doCreateTripAppointmentOrderReceiveSuccessPost());
+      successCallback && successCallback();
+    }
+    else if(res.error){
+      dispatch(doCreateTripAppointmentOrderReceiveOtherErrorPost());
+      otherErrCallback && otherErrCallback();
+    }
+    else{
+      dispatch(doCreateTripAppointmentOrderReceiveLoginErrorPost());
+      loginErrCallback && loginErrCallback();
     }
   })
 }

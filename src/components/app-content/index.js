@@ -8,6 +8,8 @@ import AppContentTrip from './app-content-trip/index.js';
 import AppContentUser from './app-content-user/index.js';
 import AppContentTripDetail from './app-content-trip-detail/index.js';
 import AppContentTripAppointment from './app-content-trip-appointment/index.js';
+import AppContentEquipment from './app-content-equipment/index.js';
+import AppContentEquipmentAppointment from './app-content-equipment-appointment/index.js';
 
 export class AppContent extends React.Component{
   constructor(props){
@@ -41,6 +43,16 @@ export class AppContent extends React.Component{
           key="tripAppointment"
           render={({history,location})=>{
             return <AppContentTripAppointment
+              history={history}
+              location={location}
+            />
+          }}
+        />
+        <Route
+          exact path="/equipment/appointment"
+          key="equipmentAppointment"
+          render={({history,location})=>{
+            return <AppContentEquipmentAppointment
               history={history}
               location={location}
             />
@@ -81,6 +93,16 @@ export class AppContent extends React.Component{
           key="trip"
           render={({history,location})=>{
             return <AppContentTrip
+              history={history}
+              location={location}
+            />
+          }}
+        />
+        <Route 
+          exact path="/equipment"
+          key="equipment"
+          render={({history,location})=>{
+            return <AppContentEquipment
               history={history}
               location={location}
             />

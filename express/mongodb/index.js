@@ -86,10 +86,22 @@ let TripSchema = new Schema({
   size: String,
   guest: String,
   about: String,
-  tripLine: {type: Schema.Types.ObjectId, ref: "tripLine"}
+  tripLine: {type: Schema.Types.ObjectId, ref: "tripLine"},
+  tripTime: [{month: String, date: String}]
 })
 
 let Trip = mongoose.model("trip", TripSchema);
+
+let TripOrderSchema = new Schema({
+  user: {type: Schema.Types.ObjectId, ref: "user"},
+  person: [{name: String, mobileNumber: String}],
+  tripTime: {month: String, date: String},
+  trip: {type: Schema.Types.ObjectId, ref: "trip"},
+  createTime: String,
+  status: String
+})
+
+let TripOrder = mongoose.model("tripOrder", TripOrderSchema);
 
 let AbSchema = new Schema({
   data: [{music: [{name: String}]}]
@@ -104,5 +116,6 @@ module.exports={
   PracticeOrder,
   Ab,
   TripLine,
-  Trip
+  Trip,
+  TripOrder
 };

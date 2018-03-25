@@ -77,6 +77,7 @@ app.use('/server/trip/getTripDetailData', urlencodeParser, require('./router/get
 //获取潜水行程
 app.use('/server/trip/getTripData', urlencodeParser, require('./router/getTripData'));
 
-app.use('/aa', urlencodeParser, require('./router/aa'))
+//创建行程订单
+app.use('/server/tripAppointment/createOrder', jsonParser, require('./router/createTripOrder'));
 
 http.createServer(app).listen(8000);

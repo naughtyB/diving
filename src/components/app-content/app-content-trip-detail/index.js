@@ -7,6 +7,7 @@ import AppContentTripDetailFeature from './app-content-trip-detail-feature/index
 import { connect } from 'react-redux';
 import { Spin, Affix, Icon } from 'antd';
 import { doGetTripDetailData } from '../../../redux/action/tripDetail';
+import { doChangeTripAppointmentStep, doChangeTripAppointmentFirstFields } from '../../../redux/action/trip';
 import './index.css';
 
 let transformHash = (hash) => {
@@ -23,10 +24,24 @@ export class AppContentTripDetail extends React.Component{
   constructor(props){
     super(props);
     this.handleRollBack = this.handleRollBack.bind(this);
+    this.handleAppointment = this.handleAppointment.bind(this);
   }
   handleRollBack(){
     this.props.history.push({
       pathname: '/trip'
+    })
+  }
+  handleAppointment(tripName){
+    this.props.history.push({
+      pathname: '/trip/appointment'
+    });
+    this.props.onChangeTripAppointmentStep(0);
+    const date = new Date();
+    date.setTime(date.getTime() + 86400000);
+    this.props.onChangeTripAppointmentFirstFields({
+      tripName: {
+        value: tripName
+      }
     })
   }
   componentWillMount(){
@@ -83,7 +98,7 @@ export class AppContentTripDetail extends React.Component{
               </div>
             </Affix>
             <Affix offsetBottom={40} style={{position: 'absolute', right: '-120px'}}>
-              <div className="app-content-trip-detail-affix-appointment">
+              <div className="app-content-trip-detail-affix-appointment" onClick={()=>this.handleAppointment(tripDetailData['name'])}>
                 <Icon type="appointment" className="app-content-trip-detail-affix-icon"/>
                 <span className="app-content-trip-detail-affix-content">预定</span>
               </div>
@@ -122,7 +137,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetTripDetailData: (tripId, errCallback) => dispatch(doGetTripDetailData(tripId, errCallback))
+    onGetTripDetailData: (tripId, errCallback) => dispatch(doGetTripDetailData(tripId, errCallback)),
+    onChangeTripAppointmentStep: (step) => dispatch(doChangeTripAppointmentStep(step)),
+    onChangeTripAppointmentFirstFields: (fields) => dispatch(doChangeTripAppointmentFirstFields(fields))
   }
 }
 

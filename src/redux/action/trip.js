@@ -13,6 +13,10 @@ export const GET_TRIP_DATA_RECEIVE_ERROR_POST = 'GET_TRIP_DATA_RECEIVE_ERROR_POS
 
 export const CHANGE_TRIP_KEY = 'CHANGE_TRIP_KEY';
 
+export const CHANGE_TRIP_APPOINTMENT_FIRST_DIELDS = 'CHANGE_TRIP_APPOINTMENT_FIRST_DIELDS';
+
+export const CHANGE_TRIP_APPOINTMENT_STEP = 'CHANGE_TRIP_APPOINTMENT_STEP';
+
 export const doGetTripDataRequestPost = () => {
   return {
     type: GET_TRIP_DATA_REQUEST_POST
@@ -55,5 +59,19 @@ export const doChangeTripKey = (tripKey) => {
   return {
     type: CHANGE_TRIP_KEY,
     tripKey
+  }
+}
+
+export const doChangeTripAppointmentFirstFields = (tripAppointmentFirstFieldsChanged) => {
+  return {
+    type: CHANGE_TRIP_APPOINTMENT_FIRST_DIELDS,
+    tripAppointmentFirstFieldsChanged
+  }
+}
+
+export const doChangeTripAppointmentStep = (tripAppointmentStep) => {
+  return {
+    type: CHANGE_TRIP_APPOINTMENT_STEP,
+    tripAppointmentStep
   }
 }

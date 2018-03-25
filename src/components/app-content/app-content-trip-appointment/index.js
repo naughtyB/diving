@@ -1,18 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Steps, Button, message, Icon } from 'antd';
+import AppContentTripAppointmentFirst from './app-content-trip-appointment-first/index.js';
+import AppContentTripAppointmentSecond from './app-content-trip-appointment-second/index.js';
+import AppContentTripAppointmentThird from './app-content-trip-appointment-third/index.js';
 import './index.css';
 const Step = Steps.Step;
 
 const steps = [{
-  title: '选择行程时间',
-  content: '1'
+  title: '选择练习地点和时段',
+  content: <AppContentTripAppointmentFirst/>
 }, {
-  title: '添加行程参与人员',
-  content: '2'
-},{
-  title: '确认信息并预约',
-  content: '3'
+  title: '添加练习人员',
+  content: <AppContentTripAppointmentSecond/>
+}, {
+  title: '付款',
+  content: <AppContentTripAppointmentThird/>
 }]
 
 export class AppContentTripAppointment extends React.Component{
@@ -22,25 +25,30 @@ export class AppContentTripAppointment extends React.Component{
   }
   handleBackWard(){
     this.props.history.push({
-      pathname: '/practice'
+      pathname: '/trip'
     })
   }
   render() {
     return (
       <div className="app-content-trip-appointment">
-        <Button type="primary" className="app-content-trip-appointment-backward">
-            <Icon type="left"/>返回行程信息
+        <Button type="primary" className="app-content-trip-appointment-backward" onClick={this.handleBackWard}>
+            <Icon type="left"/>潜水行程列表
         </Button>
-        <Steps current={0}>
+        <Steps current={this.props.tripAppointmentStep}>
           {steps.map(item => <Step key={item.title} title={item.title}/>)}
         </Steps>
-        {steps[0]['content']}
+        {steps[this.props.tripAppointmentStep]['content']}
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    tripAppointmentStep: state.trip.tripAppointmentStep
+  }
+}
 
 
 
-export default AppContentTripAppointment;
+export default connect(mapStateToProps)(AppContentTripAppointment);

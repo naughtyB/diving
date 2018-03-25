@@ -34,11 +34,7 @@ export class AppContentPractice extends React.Component{
     this.props.onChangePracticeAppointmentFirstFields({
       gymnasium: {
         value: item.name
-      },
-      practiceDate: {
-        value: moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(), 'YYYY-MM-DD')
-      },
-      practiceTime: ''
+      }
     })
   }
   render(){

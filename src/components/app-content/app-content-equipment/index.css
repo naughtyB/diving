@@ -1,0 +1,67 @@
+.app-content-equipment{
+  display: flex;
+  padding: 40px 0 0;
+  height: 100%;
+  background-color: #fff;
+}
+
+.app-content-equipment-menu{
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.app-content-equipment-menu-each{
+  padding: 0 50px !important;
+}
+
+.app-content-equipment-introduce{
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0 50px;
+  height: 100%;
+  border-left-width: 1px;
+  border-left-style: solid;
+  border-left-color: rgb(233, 233, 233);
+}
+
+.app-content-equipment-introduce-display{
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  width: 808px;
+}
+
+.app-content-equipment-introduce-display-each{
+  float: left;
+}
+
+.app-content-equipment-introduce-display-each .ant-card-cover{
+  overflow: hidden !important;
+}
+
+.app-content-equipment-introduce-display-each-img{
+  width: 238px;
+  height: 238px;
+  transition: all 500ms;
+}
+
+.app-content-equipment-introduce-display-each-img:hover{
+  transform: scale(1.1);
+}
+
+.app-content-equipment-introduce-display-each-name{
+  max-width: 190px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #49c9f5;
+}
+
+.app-content-equipment-introduce-display-each-content{
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-content-equipment-introduce-display-each-content-price{
+  color: #EA5238;
+}
