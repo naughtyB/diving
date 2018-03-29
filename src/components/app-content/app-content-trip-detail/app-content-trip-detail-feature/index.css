@@ -3,7 +3,7 @@
   line-height: 26px;
   font-size: 16px;
   padding-left: 80px;
-  background: url('/image/tripDetail/icon/ico-feature.png') no-repeat 45px -1px;
+  background: url('http://localhost:8000/public/image/tripDetail/icon/ico-feature.png') no-repeat 45px -1px;
   background-size: 23px auto;
   padding-bottom: 6px;
 }

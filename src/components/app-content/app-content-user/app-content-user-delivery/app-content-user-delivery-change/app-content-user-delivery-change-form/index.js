@@ -22,7 +22,7 @@ export class AppContentUserDeliveryChangeForm extends React.Component{
   handleSubmit(){
     this.props.form.validateFields(["name","mobileNumber","address"],(errors,values)=>{
       if(!errors && ! this.props.isSubmittingDeliveryModalFields){
-        this.props.onSubmitUserDeliveryModalFields(this.props.deliveryModalType, values["name"], values["mobileNumber"], values["address"], this.props.currentPersonId)
+        this.props.onSubmitUserDeliveryModalFields(this.props.deliveryModalType, values["name"], values["mobileNumber"], values["address"], this.props.currentDeliveryId)
       }
     })
   }

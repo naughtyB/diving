@@ -1,43 +1,75 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Spin } from 'antd';
+import { doGetCourseData } from '../../../redux/action/course.js';
+import { connect } from 'react-redux';
 import './index.css';
 
 export class AppContentCourse extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      selectedKeys: ['0']
+    };
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+  componentWillMount(){
+    this.props.onGetCourseData()
+  }
+  handleSelect({item, key, selectedKeys}){
+    if(this.state.selectedKeys[0] !== selectedKeys[0]){
+      this.setState({
+        selectedKeys: [selectedKeys[0]]
+      })
+    }
   }
   render(){
-    return (
-      <div className="app-content-course">
-        <div className="app-content-course-menu">
-          <Menu
-            style={{ width: 256 }}
-            defaultSelectedKeys={['1']}
-            mode="inline"
-          >
-            <Menu.Item key="1" className="app-content-course-menu-each">
-              高痒课程
-            </Menu.Item>
-            <Menu.Item key="2" className="app-content-course-menu-each">
-              沉船课程
-            </Menu.Item>
-            <Menu.Item key="3" className="app-content-course-menu-each">
-              水下摄影课程
-            </Menu.Item>
-            <Menu.Item key="4" className="app-content-course-menu-each">
-              侧挂课程
-            </Menu.Item>
-            <Menu.Item key="5" className="app-content-course-menu-each">
-              深潜课程
-            </Menu.Item>
-          </Menu>
-        </div>
-        <div className="app-content-course-introduce">
-          <h3><span style={{fontSize:'30px'}}>Ant Design of React</span></h3><p></p><p><span style={{color:'#314659'}}><strong>这里是 Ant Design 的 React 实现，开发和服务于企业级后台产品。</strong></span></p><p></p>
-        </div>
-      </div>
-    )
+    let { isGettingCourseData, courseData } = this.props;
+    if(courseData.length > 0){
+      return (
+        <Spin spinning={isGettingCourseData}>
+          <div className="app-content-course">
+            <div className="app-content-course-menu">
+              <Menu
+                onSelect={this.handleSelect}
+                style={{ width: 256 }}
+                selectedKeys={this.state.selectedKeys}
+                mode="inline"
+              >
+                {courseData.map((item, index) => {
+                  return (
+                    <Menu.Item key={index} className="app-content-course-menu-each">
+                      {item.name}
+                    </Menu.Item>
+                  )
+                })}
+              </Menu>
+            </div>
+            <div className="app-content-course-introduce" dangerouslySetInnerHTML={{__html: courseData[this.state.selectedKeys[0]]['detail']}}></div>
+          </div>
+        </Spin>
+      )
+    }
+    else{
+      return (
+        <Spin spinning={isGettingCourseData}>
+          <div style={{height: '300px'}}></div>
+        </Spin>
+      )
+    }
   }
 }
 
-export default AppContentCourse;
+const mapStateToProps = (state) => {
+  return {
+    isGettingCourseData: state.course.isGettingCourseData,
+    courseData: state.course.courseData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetCourseData: () => dispatch(doGetCourseData())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContentCourse);

@@ -1,5 +1,6 @@
 import BannerAnim from 'rc-banner-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
+import { withRouter } from 'react-router-dom';
 import React from "react";
 import 'rc-banner-anim/assets/index.css';
 import './index.css'
@@ -85,23 +86,29 @@ class Banner extends React.Component {
   render() {
     const intArray = this.getNextPrevNumber();
     const thumbChildren = this.props.banner.map((img, i) =>
-          <span key={i}><i style={{ backgroundImage: `url(${img})` }} /></span>
+          <span key={i}><i style={{ backgroundImage: `url(${img.url})` }} /></span>
         );
     const imgElement = this.props.banner.map((img,i,array) => {
       return (
         <Element key={i}
           prefixCls="banner-user-elem"
+          onClick={()=>{
+            this.props.history.push({
+              pathname: img.link.replace(/http:\/\/localhost:8000([\s\S]+)/, '$1')
+            })
+          }}
         >
           <BgElement
             key="bg"
             className="bg"
             style={{
-              backgroundImage: `url(${array[i]})`,
+              backgroundImage: `url(${array[i]['url']})`,
               backgroundSize: '100% 100%',
               backgroundPosition: 'center',
               position: 'absolute',
               height: '100%',
-              width: '100%'
+              width: '100%',
+              cursor: 'pointer'
             }}
           />
         </Element>
@@ -129,7 +136,7 @@ class Banner extends React.Component {
             appear={false} 
             className="img-wrapper" component="ul"
           >
-            <li style={{ backgroundImage: `url(${this.props.banner[intArray[0]]})`}} key={intArray[0]} />
+            <li style={{ backgroundImage: `url(${this.props.banner[intArray[0]]['url']})`}} key={intArray[0]}/>
           </TweenOneGroup>
         </Arrow>
         <Arrow arrowType="next" key="next" prefixCls="user-arrow" component={TweenOne}
@@ -145,7 +152,7 @@ class Banner extends React.Component {
             className="img-wrapper" 
             component="ul"
           >
-            <li style={{ backgroundImage: `url(${this.props.banner[intArray[1]]})`}} key={intArray[1]} />
+            <li style={{ backgroundImage: `url(${this.props.banner[intArray[1]]['url']})`}} key={intArray[1]} />
           </TweenOneGroup>
         </Arrow>
         <Thumb prefixCls="user-thumb" key="thumb" component={TweenOne}
@@ -158,4 +165,4 @@ class Banner extends React.Component {
   }
 }
 
-export default Banner;
+export default withRouter(Banner);

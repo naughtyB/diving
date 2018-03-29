@@ -41,6 +41,7 @@ import {
   GET_USER_DELIVERY_RECEIVE_SUCCESS_POST,
   GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST,
   GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST,
+  CHANGE_USER_DELIVERY_SELECTED_ROW_KEYS,
   CHANGE_USER_DELIVERY_MODAL_VISIBLE,
   CHANGE_USER_DELIVERY_MODAL_FIELDS,
   SUBMIT_USER_DELIVERY_MODAL_FIELDS_REQUEST_POST,
@@ -63,7 +64,11 @@ import {
   CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST,
   CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST,
   CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST,
-  CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
+  CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST,
+  CREATE_EQUIPMENT_APPOINTMENT_ORDER_REQUEST_POST,
+  CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST,
+  CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST,
+  CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST
 } from '../action/user.js';
 
 const initialUser = {
@@ -158,12 +163,14 @@ const initialUser = {
   isGettingUserDelivery: false,
   isGettingUserDeliverySuccessful: false,
   personSelectedRowKeys: [],
+  deliverySelectedRowKeys: [],
   isCreatingPracticeOrder: false,
   orderActiveKey: 'practice',
   practiceOrder: [],
   isGettingUserPracticeOrder: false,
   isGettingUserPracticeOrderSuccessful: false,
-  isCreatingTripOrder: false
+  isCreatingTripOrder: false,
+  isCreatingEquipmentOrder: false
 }
 
 export const user = (state = initialUser, action) => {
@@ -341,6 +348,8 @@ export const user = (state = initialUser, action) => {
       return {...state, isGettingUserDelivery: false, isGettingUserDeliverySuccessful: false};
     case GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST:
       return {...state, isGettingUserDelivery: false, isGettingUserDeliverySuccessful: false, loginState: false};
+    case CHANGE_USER_DELIVERY_SELECTED_ROW_KEYS:
+      return {...state, deliverySelectedRowKeys: action.deliverySelectedRowKeys};
     case CHANGE_USER_DELIVERY_MODAL_VISIBLE:
       return {
         ...state, 
@@ -405,7 +414,7 @@ export const user = (state = initialUser, action) => {
       return {...state, isGettingUserPracticeOrder: false, loginState: false, isGettingUserPracticeOrderSuccessful: false};
     case GET_USER_ORDER_RECEIVE_OTHER_ERROR_POST:
       return {...state, isGettingUserPracticeOrder: false, isGettingUserPracticeOrderSuccessful: false};
-      case CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST:
+    case CREATE_TRIP_APPOINTMENT_ORDER_REQUEST_POST:
       return {...state, isCreatingTripOrder: true};
     case CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST:
       return {...state, isCreatingTripOrder: false, personSelectedRowKeys: []};
@@ -413,6 +422,14 @@ export const user = (state = initialUser, action) => {
       return {...state, isCreatingTripOrder: false, loginState: false, loginModalVisible: true};
     case CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:
       return {...state, isCreatingTripOrder: false};
+    case CREATE_EQUIPMENT_APPOINTMENT_ORDER_REQUEST_POST:
+      return {...state ,isCreatingEquipmentOrder: true};
+    case CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST:
+      return {...state, isCreatingEquipmentOrder: false, deliverySelectedRowKeys: []};
+    case CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST:
+      return {...state, isCreatingEquipmentOrder: false, loginState: false, loginModalVisible: true};
+    case CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST:
+      return {...state, isCreatingEquipmentOrder: false};
     default:
       return state;
   }

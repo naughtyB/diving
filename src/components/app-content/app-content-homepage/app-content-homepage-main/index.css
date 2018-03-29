@@ -10,7 +10,7 @@
   }
 }
 .app-content-homepage-main{
-  background-image: url('/image/homepage/bg1.jpg');
+  background-image: url('http://localhost:8000/public/image/homepage/bg1.jpg');
   background-size: 100% 100%;
 }
 .app-content-homepage-main-bubbleAnim{
@@ -23,7 +23,7 @@
   text-align: center;
   line-height: 200px;
   border-radius: 50%;
-  background-image: url('/image/homepage/paopao.png');
+  background-image: url('http://localhost:8000/public/image/homepage/paopao.png');
   background-size: 100% 100%;
   cursor: pointer;
   overflow: hidden;

@@ -144,6 +144,7 @@ export class AppContentUser extends React.Component{
                 return <AppContentUserDelivery
                   history={history}
                   location={location}
+                  beCanSelected={false}
                 />
               }}
             />

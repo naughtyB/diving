@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Steps, Button, message, Icon } from 'antd';
+import { Steps, Button, Icon } from 'antd';
 import AppContentPracticeAppointmentFirst from './app-content-practice-appointment-first/index.js';
 import AppContentPracticeAppointmentSecond from './app-content-practice-appointment-second/index.js';
 import AppContentPracticeAppointmentThird from './app-content-practice-appointment-third/index.js';

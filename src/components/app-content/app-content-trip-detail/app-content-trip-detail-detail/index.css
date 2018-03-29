@@ -26,32 +26,32 @@
 }
 
 .app-content-trip-detail-detail-feature-wifi{
-  background-image: url('/image/tripDetail/icon/ico-wifi.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-wifi.png');
   background-size: 36px auto;
 }
 
 .app-content-trip-detail-detail-feature-nitrox{
-  background-image: url('/image/tripDetail/icon/ico-nitrox.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-nitrox.png');
   background-size: 32px auto;
 }
 
 .app-content-trip-detail-detail-feature-ac{
-  background-image: url('/image/tripDetail/icon/ico-ac2.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-ac2.png');
   background-size: 41px auto;
 }
 
 .app-content-trip-detail-detail-feature-luxury{
-  background-image: url('/image/tripDetail/icon/ico-luxury.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-luxury.png');
   background-size: 32px auto;
 }
 
 .app-content-trip-detail-detail-feature-size{
-  background-image: url('/image/tripDetail/icon/ico-size.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-size.png');
   background-size: 53px auto;
 }
 
 .app-content-trip-detail-detail-feature-guest{
-  background-image: url('/image/tripDetail/icon/ico-guest.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-guest.png');
   background-size: 38px auto;
 }
 

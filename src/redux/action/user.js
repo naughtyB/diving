@@ -100,6 +100,7 @@ export const DELETE_USER_PERSON_RECEIVE_OTHER_ERROR_POST = 'DELETE_USER_PERSON_R
 
 export const DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST = 'DELETE_USER_PERSON_RECEIVE_LOGIN_ERROR_POST';
 
+
 //获取用户收货信息列表
 
 export const GET_USER_DELIVERY_REQUEST_POST = 'GET_USER_DELIVERY_REQUEST_POST';
@@ -109,6 +110,8 @@ export const GET_USER_DELIVERY_RECEIVE_SUCCESS_POST = 'GET_USER_DELIVERY_RECEIVE
 export const GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST = 'GET_USER_DELIVERY_RECEIVE_OTHER_ERROR_POST';
 
 export const GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST = 'GET_USER_DELIVERY_RECEIVE_LOGIN_ERROR_POST';
+
+export const CHANGE_USER_DELIVERY_SELECTED_ROW_KEYS = 'CHANGE_USER_DELIVERY_SELECTED_ROW_KEYS';
 
 //改变添加用户收货弹出框的显示
 export const CHANGE_USER_DELIVERY_MODAL_VISIBLE = 'CHANGE_USER_DELIVERY_MODAL_VISIBLE';
@@ -163,6 +166,16 @@ export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST = 'CREATE_TRIP_A
 export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST';
 
 export const CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_TRIP_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
+
+//创建装备订单
+export const CREATE_EQUIPMENT_APPOINTMENT_ORDER_REQUEST_POST = 'CREATE_EQUIPMENT_APPOINTMENT_ORDER_REQUEST_POST';
+
+export const CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST = 'CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST';
+
+export const CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST = 'CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST';
+
+export const CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST = 'CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST';
+
 
 export const doChangeUserLoginModalVisible = (loginModalVisible) => {
   return {
@@ -688,6 +701,13 @@ export const doGetUserDelivery = () => (dispatch) => {
   })
 }
 
+export const doChangeUserDeliverySelectedRowKeys = (deliverySelectedRowKeys) => {
+  return {
+    type: CHANGE_USER_DELIVERY_SELECTED_ROW_KEYS,
+    deliverySelectedRowKeys
+  }
+}
+
 
 export const doChangeUserDeliveryModalVisible = (deliveryModalVisible, deliveryModalType, name, mobileNumber, address, currentDeliveryId) => {
   return {
@@ -992,6 +1012,57 @@ export const doCreateTripAppointmentOrder = (orderData, successCallback, otherEr
     }
     else{
       dispatch(doCreateTripAppointmentOrderReceiveLoginErrorPost());
+      loginErrCallback && loginErrCallback();
+    }
+  })
+}
+
+export const doCreateEquipmentAppointmentOrderReuqestPost = () => {
+  return {
+    type: CREATE_EQUIPMENT_APPOINTMENT_ORDER_REQUEST_POST
+  }
+}
+
+export const doCreateEquipmentAppointmentOrderReceiveSuccessPost = () => {
+  return {
+    type: CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_SUCCESS_POST
+  }
+}
+
+export const doCreateEquipmentAppointmentOrderReceiveOtherErrorPost = () => {
+  return {
+    type: CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_OTHER_ERROR_POST
+  }
+}
+
+export const doCreateEquipmentAppointmentOrderReceiveLoginErrorPost = () => {
+  return {
+    type: CREATE_EQUIPMENT_APPOINTMENT_ORDER_RECEIVE_LOGIN_ERROR_POST
+  }
+}
+
+export const doCreateEquipmentAppointmentOrder = (orderData, successCallback, otherErrCallback, loginErrCallback) => (dispatch) => {
+  dispatch(doCreateEquipmentAppointmentOrderReuqestPost());
+  return fetch('/server/equipment/createOrder', {
+    method: 'post',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body: orderData,
+    credentials: 'include'
+  }).then((res) => {
+    return res.json();
+  }).then((res) => {
+    if(res.isSuccessful){
+      dispatch(doCreateEquipmentAppointmentOrderReceiveSuccessPost());
+      successCallback && successCallback();
+    }
+    else if(res.error){
+      dispatch(doCreateEquipmentAppointmentOrderReceiveOtherErrorPost());
+      otherErrCallback && otherErrCallback();
+    }
+    else{
+      dispatch(doCreateEquipmentAppointmentOrderReceiveLoginErrorPost());
       loginErrCallback && loginErrCallback();
     }
   })

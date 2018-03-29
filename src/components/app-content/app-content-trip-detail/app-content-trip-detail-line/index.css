@@ -62,7 +62,7 @@
   margin-bottom: 20px;
   background-repeat: no-repeat;
   background-position: 0 center;
-  background-image: url('/image/tripDetail/icon/ico-embark.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-embark.png');
   background-size: 29px auto;
 }
 
@@ -74,7 +74,7 @@
   margin-bottom: 20px;
   background-repeat: no-repeat;
   background-position: 0 center;
-  background-image: url('/image/tripDetail/icon/ico-disembark.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-disembark.png');
   background-size: 29px auto;
 }
 
@@ -86,7 +86,7 @@
   margin-bottom: 20px;
   background-repeat: no-repeat;
   background-position: 0 center;
-  background-image: url('/image/tripDetail/icon/ico-dives.png');
+  background-image: url('http://localhost:8000/public/image/tripDetail/icon/ico-dives.png');
   background-size: 29px auto;
 }
 
@@ -126,6 +126,6 @@
   padding-left: 16px;
   font-size: 14px;  
   line-height: 28px;
-  background: url('/image/tripDetail/icon/ico-dot.png') no-repeat 0 center;
+  background: url('http://localhost:8000/public/image/tripDetail/icon/ico-dot.png') no-repeat 0 center;
   background-size: 4px auto;
 }

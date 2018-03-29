@@ -5,25 +5,6 @@
   width: 1150px;
 }
 
-.app-content-equipment-appointment-titleFrame{
-  display: none;
-  justify-content: space-between;  
-  padding: 30px 0 15px;
-  height: 75px;
-}
-
-/* .app-content-equipment-appointment-titleFrame-name{
-  font-size: 20px;
-  font-weight: 400;  
-  line-height: 30px;
-  color: rgb(66, 68, 69);
-}
-
-.app-content-equipment-appointment-titleFrame-priceDetail{
-  font-size: 20px;
-  line-height: 30px;
-} */
-
 .app-content-equipment-appointment-purchase{
   overflow: hidden;
 }
@@ -72,13 +53,8 @@
 .app-content-equipment-appointment-purchase-img-chooseFrame-each-image{
   width: 64px;
   height: 64px;
-  border: 1px solid transparent;
   transition: all 500ms;
   cursor: pointer;
-}
-
-.app-content-equipment-appointment-purchase-img-chooseFrame-each-image:hover{
-  border: 1px solid rgba(0, 0, 0, 0.3)
 }
 
 .app-content-equipment-appointment-purchase-synopsis{
@@ -105,7 +81,7 @@
 }
 
 .app-content-equipment-appointment-purchase-synopsis-postage-title{
-  width: 50px;
+  width: 100px;
   color: #999;
   font-size: 14px;
 }
@@ -115,22 +91,96 @@
   font-size: 14px;
 }
 
-.app-content-equipment-appointment-purchase-synopsis-size,.app-content-equipment-appointment-purchase-synopsis-color{
+.app-content-equipment-appointment-purchase-synopsis-price{
+  display: flex;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-price-title{
+  width: 100px;
+  color: #999;
+  font-size: 14px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-price-content{
+  color: rgb(228, 57, 60);
+  font-size: 14px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-size,.app-content-equipment-appointment-purchase-synopsis-color,.app-content-equipment-appointment-purchase-synopsis-number{
   display: flex;  
 }
 
-.app-content-equipment-appointment-purchase-synopsis-size-title,.app-content-equipment-appointment-purchase-synopsis-color-title{
-  width: 50px;
+.app-content-equipment-appointment-purchase-synopsis-size-title,.app-content-equipment-appointment-purchase-synopsis-color-title, .app-content-equipment-appointment-purchase-synopsis-number-title{
+  width: 100px;
   height: 40px;
   line-height: 40px;
   color: #999;
   font-size: 14px;
 }
 
-.app-content-equipment-appointment-purchase-synopsis-size-content,.app-content-equipment-appointment-purchase-synopsis-color-content{
+.app-content-equipment-appointment-purchase-synopsis-size-content,.app-content-equipment-appointment-purchase-synopsis-color-content, .app-content-equipment-appointment-purchase-synopsis-number-content{
   color: #666;
   font-size: 14px;
 }
-.app-content-equipment-appointment-purchase-synopsis-size .ant-form-item, .app-content-equipment-appointment-purchase-synopsis-color .ant-form-item{
+.app-content-equipment-appointment-purchase-synopsis-size .ant-form-item, .app-content-equipment-appointment-purchase-synopsis-color .ant-form-item, .app-content-equipment-appointment-purchase-synopsis-number .ant-form-item{
   margin-bottom: 0;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-buyButton{
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery{
+  display: flex;
+  margin: 0;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-title{
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  color: #999;
+  font-size: 14px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-content{
+  color: #666;
+  font-size: 14px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-button{
+  margin-top: 5px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-modal .ant-modal{
+  width: 815px !important;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-modal .ant-modal-body{
+  padding: 0;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-modal .ant-modal-footer{
+  border-top: none;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-detail{
+  display: flex;
+  margin: 0;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-detail-title{
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  color: #999;
+  font-size: 14px;
+}
+
+.app-content-equipment-appointment-purchase-synopsis-delivery-detail-content{
+  color: #666;
+  font-size: 14px;
+  line-height: 40px;
 }

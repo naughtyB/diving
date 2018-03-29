@@ -19,7 +19,7 @@ export class AppContentTripDetailLine extends React.Component{
         </div>
         <div className="app-content-trip-detail-line-info">
           <div className="app-content-trip-detail-line-info-icon">
-            <img className="app-content-trip-detail-line-info-icon-image" src="/image/tripDetail/icon/default-Itinerary.png" alt=""/>
+            <img className="app-content-trip-detail-line-info-icon-image" src="http://localhost:8000/public/image/tripDetail/icon/default-Itinerary.png" alt=""/>
           </div>
           <ul className="app-content-trip-detail-line-info-introduction">
             <li className="app-content-trip-detail-line-info-introduction-embark">

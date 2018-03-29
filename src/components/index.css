@@ -69,3 +69,15 @@
   box-shadow: 0 2px 8px #f0f1f2;
   z-index: 10;
 }
+
+.ant-spin-nested-loading{
+  height: 100%;
+}
+
+.ant-spin-container{
+  height: 100%;
+}
+
+.banner-anim{
+  height: 100%;
+}
